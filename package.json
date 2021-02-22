@@ -1,0 +1,24 @@
+{
+  "name": "profiles_testtask",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/postscriptumno/profiles_testtask.git"
+  },
+  "author": "postscriptumno",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/postscriptumno/profiles_testtask/issues"
+  },
+  "homepage": "https://github.com/postscriptumno/profiles_testtask#readme",
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.22.0"
+  }
+}
