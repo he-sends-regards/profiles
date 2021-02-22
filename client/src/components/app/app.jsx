@@ -1,23 +1,26 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import AuthForm from '../auth-form/auth-form';
+import Home from '../home/home';
 import './app.css';
 
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/auth" exact>
+          <AuthForm />
+        </Route>
+        <Route path="/account" exact></Route>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
