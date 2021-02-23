@@ -20,3 +20,12 @@
 .App-link {
   color: #61dafb;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.auth-form__backward-link {
+  text-decoration: none;
+  font-size: 60px;
+}
