@@ -1,19 +1,30 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
-import {AuthorizationStatus} from '../../const';
+import {AuthContext} from '../../context/AuthContext';
 
 const Home = () => {
-  const authStatus = AuthorizationStatus.NO_AUTH;
+  const auth = useContext(AuthContext);
 
   return (
     <div className="home">
-      <Link to='/auth'>
-        {
-          authStatus === AuthorizationStatus.AUTH ?
-          'My account' :
-          'Login/Register'
-        }
-      </Link>
+      {
+        auth.isAuthenticated ? (
+          <>
+            <Link to='/account'>
+              Account
+            </Link>
+            <br />
+            <br />
+            <button onClick={() => auth.logout()}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link to='/auth'>
+            Login/Register
+          </Link>
+        )
+      }
     </div>
   );
 };

@@ -1,6 +1,7 @@
-import React, {useState, createRef} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState, createRef, useContext} from 'react';
+import {Link, Redirect} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
 import './auth-form.css';
 
@@ -10,6 +11,12 @@ const AuthorizationType = {
 };
 
 const AuthForm = () => {
+  const auth = useContext(AuthContext);
+  if (auth.isAuthenticated) {
+    alert('You are authenticated!');
+    return <Redirect to="/account" />;
+  }
+
   const [authType, setAuthType] = useState('');
   const {request} = useHttp();
 
@@ -30,6 +37,15 @@ const AuthForm = () => {
     }
 
     const data = await request(`/api/auth/${authType}`, 'POST', authData);
+
+    if (authType === AuthorizationType.LOGIN) {
+      auth.login(data.token, data.userId, data.userName, data.userMail);
+    }
+
+    if (authType === AuthorizationType.REGISTER) {
+      alert('You have been registered!');
+      setAuthType(AuthorizationType.LOGIN);
+    }
 
     console.log(data);
   };
