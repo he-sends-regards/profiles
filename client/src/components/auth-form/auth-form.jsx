@@ -11,7 +11,6 @@ const AuthorizationType = {
 
 const AuthForm = () => {
   const [authType, setAuthType] = useState('');
-
   const {request} = useHttp();
 
   const nameRef = createRef();

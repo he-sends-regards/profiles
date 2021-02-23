@@ -18,7 +18,8 @@ export const useHttp = () => {
           const data = await response.json();
 
           if (!response.ok) {
-            throw new Error(data.message || 'При запросе что-то пошло не так');
+            console.error(data.message || 'При запросе что-то пошло не так');
+            alert(data.message || 'При запросе что-то пошло не так');
           }
 
           setLoading(false);
