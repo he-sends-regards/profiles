@@ -41,7 +41,13 @@ const AuthForm = () => {
     const data = await request(`/api/auth/${authType}`, 'POST', authData);
 
     if (authType === AuthorizationType.LOGIN) {
-      auth.login(data.token, data.userId, data.userName, data.userMail);
+      auth.login(
+          data.token,
+          data.userId,
+          data.userName,
+          data.userMail,
+          data.isUserAdmin,
+      );
     }
 
     if (authType === AuthorizationType.REGISTER) {

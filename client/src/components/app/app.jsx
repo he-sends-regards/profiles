@@ -13,12 +13,21 @@ import Home from '../home/home';
 import './app.css';
 
 const App = () => {
-  const {token, login, logout, userId, userName, userMail} = useAuth();
+  const {
+    token, login, logout, userId, userName, userMail, isUserAdmin,
+  } = useAuth();
   const isAuthenticated = !!token;
 
   return (
     <AuthContext.Provider value={{
-      token, login, logout, userId, isAuthenticated, userName, userMail,
+      token,
+      login,
+      logout,
+      userId,
+      isAuthenticated,
+      userName,
+      userMail,
+      isUserAdmin,
     }}>
       <Router>
         <Switch>
