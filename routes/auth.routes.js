@@ -39,6 +39,7 @@ router.post(
           name,
           email,
           password,
+          isAdmin,
         } = req.body;
 
         const candidate = await User.findOne({
@@ -57,6 +58,7 @@ router.post(
           name,
           email,
           password: hashedPassword,
+          isAdmin,
         });
 
         await newUser.save();
@@ -65,6 +67,7 @@ router.post(
           message: 'User registered',
           userName: newUser.name,
           userMail: newUser.email,
+          isUserAdmin: newUser.isAdmin,
         });
       } catch (error) {
         res.sendStatus(500).json({
@@ -132,6 +135,7 @@ router.post(
           userId: user.id,
           userName: user.name,
           userMail: user.email,
+          isUserAdmin: user.isAdmin,
         });
       } catch (error) {
         res.sendStatus(500).json({

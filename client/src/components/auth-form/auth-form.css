@@ -14,3 +14,12 @@
 .auth-form__auth-buttons button {
   margin: 0 10px;
 }
+
+.auth-form__isAdmin-label {
+  margin-right: 20px;
+}
+
+.auth-form__isAdmin-checkbox {
+  width: 30px;
+  height: 30px;
+}

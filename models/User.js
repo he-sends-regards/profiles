@@ -18,6 +18,10 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+  },
   profiles: [{
     type: Types.ObjectId,
     ref: 'Profile',

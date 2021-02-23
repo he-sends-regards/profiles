@@ -23,6 +23,7 @@ const AuthForm = () => {
   const nameRef = createRef();
   const emailRef = createRef();
   const passwordRef = createRef();
+  const isAdminCheckboxRef = createRef();
 
   const handleSumbit = async (evt) => {
     evt.preventDefault();
@@ -34,6 +35,7 @@ const AuthForm = () => {
 
     if (authType === AuthorizationType.REGISTER) {
       authData.name = nameRef.current.value;
+      authData.isAdmin = isAdminCheckboxRef.current.value === 'on';
     }
 
     const data = await request(`/api/auth/${authType}`, 'POST', authData);
@@ -109,6 +111,27 @@ const AuthForm = () => {
               required
             />
             <br />
+            {
+              authType === AuthorizationType.REGISTER && (
+                <>
+                  <br />
+                  <label
+                    htmlFor="isAdmin"
+                    className="auth-form__isAdmin-label"
+                  >
+              Are you an admin?
+                  </label>
+                  <input
+                    type="checkbox"
+                    name=""
+                    id="isAdmin"
+                    className="auth-form__isAdmin-checkbox"
+                    ref={isAdminCheckboxRef}
+                  />
+                  <br />
+                </>
+              )
+            }
             <br />
             <button className="auth-form__submit-btn capitalize" type="submit">
               {authType}
