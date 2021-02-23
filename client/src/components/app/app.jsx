@@ -4,6 +4,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import {AppRoute} from '../../const';
+import Account from '../account/account';
 import AuthForm from '../auth-form/auth-form';
 import Home from '../home/home';
 import './app.css';
@@ -12,11 +14,13 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/auth" exact>
+        <Route path={AppRoute.AUTH} exact>
           <AuthForm />
         </Route>
-        <Route path="/account" exact></Route>
-        <Route path="/" exact>
+        <Route path={AppRoute.ACCOUNT} exact>
+          <Account />
+        </Route>
+        <Route path={AppRoute.ROOT} exact>
           <Home />
         </Route>
       </Switch>

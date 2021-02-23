@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, createRef} from 'react';
 import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import './auth-form.css';
 
-const AUTH_TYPE = {
+const AuthorizationType = {
   LOGIN: 'login',
   REGISTER: 'register',
 };
@@ -10,63 +11,90 @@ const AUTH_TYPE = {
 const AuthForm = () => {
   const [authType, setAuthType] = useState('');
 
+  const nameRef = createRef();
+  const emailRef = createRef();
+  const passwordRef = createRef();
+
+  const handleSumbit = (evt) => {
+    evt.preventDefault();
+
+    const authData = {
+      authType,
+      login: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
+    if (authType === AuthorizationType.REGISTER) {
+      authData.name = nameRef.current.value;
+    }
+
+    console.log(authData);
+  };
+
   return (
     <div className="auth-form">
-      <Link to='/' style={{textDecoration: 'none', fontSize: '60px'}}>
+      <Link to={AppRoute.ROOT} className="auth-form__backward-link">
         <span>&#8592;</span>
       </Link>
 
-      <div>
+      <div className="auth-form__auth-buttons">
         <button
-          onClick={() => setAuthType(AUTH_TYPE.LOGIN)}
-          disabled={authType === AUTH_TYPE.LOGIN}
-          style={{margin: '0 20px'}}
+          onClick={() => setAuthType(AuthorizationType.LOGIN)}
+          disabled={authType === AuthorizationType.LOGIN}
         >
           Login
         </button>
         <button
-          onClick={() => setAuthType(AUTH_TYPE.REGISTER)}
-          disabled={authType === AUTH_TYPE.REGISTER}
+          onClick={() => setAuthType(AuthorizationType.REGISTER)}
+          disabled={authType === AuthorizationType.REGISTER}
         >
           Register
         </button>
       </div>
 
       {
-        authType === AUTH_TYPE.LOGIN && (
-          <form action="">
-            <h3>Login form</h3>
-
-            <label htmlFor="email-field">Email:</label><br />
-            <input type="email" id="email-field"/><br />
-
-            <label htmlFor="password-field">Password:</label><br />
-            <input type="password" id="password-field"/><br />
-          </form>
-        )
-      }
-      {
-        authType === AUTH_TYPE.REGISTER && (
-          <form action="">
-            <h3>Registration form</h3>
-
-            <label htmlFor="name-field">Name:</label><br />
-            <input type="name" id="name-field"/><br />
-
-            <label htmlFor="email-field">Email:</label><br />
-            <input type="email" id="email-field"/><br />
-
-            <label htmlFor="password-field">Password:</label><br />
-            <input type="password" id="password-field"/><br />
-          </form>
-        )
-      }
-      <br />
-      {
         authType && (
-          <button type="submit" style={{textTransform: 'capitalize'}}>
-            {authType}
-          </button>
+          <form onSubmit={handleSumbit}>
+            <h3 className="capitalize">{authType && (`${authType} form`)}</h3>
+
+            {
+              authType === AuthorizationType.REGISTER && (
+                <>
+                  <label htmlFor="name-field">Name:</label>
+                  <br />
+                  <input
+                    minLength="2"
+                    type="name"
+                    id="name-field"
+                    ref={nameRef}
+                    required
+                  />
+                  <br />
+                </>
+              )
+            }
+
+            <label htmlFor="email-field">Email:</label>
+            <br />
+            <input type="email" id="email-field" ref={emailRef} required/>
+            <br />
+
+            <label htmlFor="password-field">Password:</label>
+            <br />
+            <input
+              type="password"
+              id="password-field"
+              ref={passwordRef}
+              minLength="6"
+              maxLength="24"
+              required
+            />
+            <br />
+            <br />
+            <button className="auth-form__submit-btn capitalize" type="submit">
+              {authType}
+            </button>
+          </form>
         )
       }
     </div>
