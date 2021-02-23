@@ -1,6 +1,7 @@
 import React, {useState, createRef} from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {useHttp} from '../../hooks/http.hook';
 import './auth-form.css';
 
 const AuthorizationType = {
@@ -11,16 +12,17 @@ const AuthorizationType = {
 const AuthForm = () => {
   const [authType, setAuthType] = useState('');
 
+  const {request} = useHttp();
+
   const nameRef = createRef();
   const emailRef = createRef();
   const passwordRef = createRef();
 
-  const handleSumbit = (evt) => {
+  const handleSumbit = async (evt) => {
     evt.preventDefault();
 
     const authData = {
-      authType,
-      login: emailRef.current.value,
+      email: emailRef.current.value,
       password: passwordRef.current.value,
     };
 
@@ -28,7 +30,9 @@ const AuthForm = () => {
       authData.name = nameRef.current.value;
     }
 
-    console.log(authData);
+    const data = await request(`/api/auth/${authType}`, 'POST', authData);
+
+    console.log(data);
   };
 
   return (
