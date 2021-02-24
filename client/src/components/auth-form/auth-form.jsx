@@ -49,8 +49,6 @@ const AuthForm = () => {
       alert('You have been registered!');
       setAuthType(AuthorizationType.LOGIN);
     }
-
-    console.log(data);
   };
 
   return (

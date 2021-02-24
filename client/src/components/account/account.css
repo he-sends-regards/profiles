@@ -1,4 +1,14 @@
+.account {
+  margin-top: 3rem;
+  font-size: 1.5rem !important;
+}
+
+.account {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .account__logout-btn {
   width: 100%;
-  font-size: 1.5rem !important;
 }

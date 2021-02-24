@@ -1,0 +1,8 @@
+.profile-card {
+  color: black;
+  font-size: .8rem;
+  margin: 0px 10px 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
