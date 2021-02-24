@@ -144,5 +144,38 @@ router.post(
       }
     });
 
+router.get(
+    '/users',
+    async (req, res) => {
+      try {
+        const users = await User.find();
+        res.json(users);
+      } catch (error) {
+        res.sendStatus(500).json({
+          message: 'что-то пошло не так',
+        });
+      }
+    },
+);
+
+router.delete(
+    '/users/delete/:email',
+    async (req, res) => {
+      try {
+        const userEmail = req.params.email;
+        console.log(userEmail);
+        await User.deleteOne({email: userEmail});
+
+        res.json({
+          message: 'Пользователь удалён',
+        });
+      } catch (error) {
+        res.sendStatus(500).json({
+          message: 'что-то пошло не так',
+        });
+      }
+    },
+);
+
 module.exports = router;
 

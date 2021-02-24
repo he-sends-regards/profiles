@@ -1,6 +1,5 @@
 const express = require('express');
 const config = require('config');
-const router = require('./routes/auth.routes.js');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -8,7 +7,8 @@ const app = express();
 app.use(express.json({
   extended: true,
 }));
-app.use('/api/auth', router);
+app.use('/api/auth', require('./routes/auth.routes.js'));
+app.use('/api/profiles', require('./routes/profiles.routes.js'));
 
 const PORT = config.get('port');
 
