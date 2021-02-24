@@ -3,13 +3,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {AuthContext} from '../../context/AuthContext';
 import {useAuth} from '../../hooks/auth.hook';
 import Account from '../account/account';
 import AuthForm from '../auth-form/auth-form';
-import Home from '../home/home';
 import './app.css';
 
 const App = () => {
@@ -32,13 +32,21 @@ const App = () => {
       <Router>
         <Switch>
           <Route path={AppRoute.AUTH} exact>
-            <AuthForm />
+            {
+              isAuthenticated ? <Redirect to="/account" /> : <AuthForm />
+            }
           </Route>
           <Route path={AppRoute.ACCOUNT} exact>
-            <Account />
+            {
+              isAuthenticated ? <Account /> : <Redirect to="/auth" />
+            }
           </Route>
           <Route path={AppRoute.ROOT} exact>
-            <Home />
+            {
+              isAuthenticated ?
+                <Redirect to="/account" /> :
+                <Redirect to="/auth" />
+            }
           </Route>
         </Switch>
       </Router>
