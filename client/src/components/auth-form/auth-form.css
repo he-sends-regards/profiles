@@ -4,10 +4,12 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100vh;
 }
 
 .auth-form__auth-buttons button {
   margin: 0 10px;
+  font-size: 1.5rem;
 }
 
 .auth-form__isAdmin-label {
@@ -17,4 +19,8 @@
 .auth-form__isAdmin-checkbox {
   width: 30px;
   height: 30px;
+}
+
+.auth-form__submit-btn {
+  font-size: 1.5rem !important;
 }

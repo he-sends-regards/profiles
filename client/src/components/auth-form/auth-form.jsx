@@ -1,8 +1,7 @@
 import React, {useState, createRef, useContext} from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
+import {ButtonGroup, Button} from 'react-bootstrap';
 import './auth-form.css';
 
 const AuthorizationType = {
@@ -12,10 +11,6 @@ const AuthorizationType = {
 
 const AuthForm = () => {
   const auth = useContext(AuthContext);
-  if (auth.isAuthenticated) {
-    alert('You are authenticated!');
-    return <Redirect to="/account" />;
-  }
 
   const [authType, setAuthType] = useState('');
   const {request} = useHttp();
@@ -35,7 +30,7 @@ const AuthForm = () => {
 
     if (authType === AuthorizationType.REGISTER) {
       authData.name = nameRef.current.value;
-      authData.isAdmin = isAdminCheckboxRef.current.value === 'on';
+      authData.isAdmin = isAdminCheckboxRef.current.checked;
     }
 
     const data = await request(`/api/auth/${authType}`, 'POST', authData);
@@ -60,30 +55,26 @@ const AuthForm = () => {
 
   return (
     <div className="auth-form">
-      <Link to={AppRoute.ROOT} className="auth-form__backward-link">
-        <span>&#8592;</span>
-      </Link>
-
-      <div className="auth-form__auth-buttons">
-        <button
+      <ButtonGroup aria-label="Basic example"
+        className="auth-form__auth-buttons"
+      >
+        <Button variant="primary"
           onClick={() => setAuthType(AuthorizationType.LOGIN)}
           disabled={authType === AuthorizationType.LOGIN}
         >
           Login
-        </button>
-        <button
+        </Button>
+        <Button variant="primary"
           onClick={() => setAuthType(AuthorizationType.REGISTER)}
           disabled={authType === AuthorizationType.REGISTER}
         >
           Register
-        </button>
-      </div>
+        </Button>
+      </ButtonGroup>
 
       {
         authType && (
           <form onSubmit={handleSumbit}>
-            <h3 className="capitalize">{authType && (`${authType} form`)}</h3>
-
             {
               authType === AuthorizationType.REGISTER && (
                 <>
@@ -120,7 +111,6 @@ const AuthForm = () => {
             {
               authType === AuthorizationType.REGISTER && (
                 <>
-                  <br />
                   <label
                     htmlFor="isAdmin"
                     className="auth-form__isAdmin-label"
@@ -138,10 +128,14 @@ const AuthForm = () => {
                 </>
               )
             }
-            <br />
-            <button className="auth-form__submit-btn capitalize" type="submit">
+            <br/>
+            <Button
+              className="auth-form__submit-btn capitalize"
+              type="submit"
+              variant="success"
+            >
               {authType}
-            </button>
+            </Button>
           </form>
         )
       }
