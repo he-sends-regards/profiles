@@ -8,7 +8,7 @@ import {APIRoute} from '../../const';
 
 const ProfilesList = ({isActive, listType}) => {
   const {userMail} = useContext(AuthContext);
-  const [editingCard, setCardEditing] = useState(-1);
+  const [editingCard, setCardEditing] = useState('');
   const [profiles, setProfiles] = useState([]);
   const [isProfileDeleted, setIsProfileDeleted] = useState(false);
   const {request} = useHttp();

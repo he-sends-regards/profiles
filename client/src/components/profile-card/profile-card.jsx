@@ -36,7 +36,7 @@ const ProfileCard = ({profile,
           editingCard === profile._id ?
             (
               <Card.Link style={{cursor: 'pointer'}} onClick={() => {
-                setCardEditing(-1);
+                setCardEditing('');
               }}>
                 X
               </Card.Link>
