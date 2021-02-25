@@ -1,11 +1,7 @@
 const Router = require('express');
-// const auth = require('../middleware/auth.middleware');
 const Profile = require('../models/Profile');
 
 const router = new Router();
-
-// /api/profiles/add
-// router.post()
 
 router.get(
     '/',
@@ -28,7 +24,10 @@ router.delete(
         const profileId = req.params.id;
 
         await Profile.deleteOne({_id: profileId});
-        res.json({message: 'Профиль удалён'});
+        res.json({
+          status: 200,
+          message: 'Профиль удалён',
+        });
       } catch (error) {
         res
             .send(500)

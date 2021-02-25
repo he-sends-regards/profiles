@@ -1,23 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import ProfileCard from '../profile-card/profile-card';
-import PropTypes from 'prop-types';
 import {useHttp} from '../../hooks/http.hook';
 import {Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import ProfileCard from '../profile-card/profile-card';
+import {APIRoute} from '../../const';
 
 const ProfilesList = ({isActive}) => {
   const [editingCard, setCardEditing] = useState(-1);
   const [profiles, setProfiles] = useState([]);
+  const [isProfileDeleted, setIsProfileDeleted] = useState(false);
   const {request} = useHttp();
 
   const getProfiles = async () => {
-    setProfiles(await request('/api/profiles/'));
+    setProfiles(await request(APIRoute.GET_PROFILES));
   };
 
   useEffect(() => {
     if (isActive) {
       getProfiles();
     }
-  }, [isActive]);
+    setIsProfileDeleted(false);
+  }, [isActive, isProfileDeleted]);
 
   return (
     <div style={{
@@ -35,6 +38,8 @@ const ProfilesList = ({isActive}) => {
               index={i}
               editingCard={editingCard}
               setCardEditing={setCardEditing}
+              setIsProfileDeleted={setIsProfileDeleted}
+              isProfileDeleted={isProfileDeleted}
             />
           );
         })

@@ -4,7 +4,13 @@ import {Card} from 'react-bootstrap';
 import {useHttp} from '../../hooks/http.hook';
 import './profile-card.css';
 
-const ProfileCard = ({profile, setCardEditing, editingCard, index}) => {
+const ProfileCard = ({profile,
+  setCardEditing,
+  editingCard,
+  index,
+  setIsProfileDeleted,
+  isProfileDeleted,
+}) => {
   const {request} = useHttp();
 
   return (
@@ -46,10 +52,13 @@ const ProfileCard = ({profile, setCardEditing, editingCard, index}) => {
             cursor: 'pointer',
           }}
           onClick={async () => {
-            return await request(
+            const data = await request(
                 `/api/profiles/delete/${profile._id}`,
                 'DELETE',
             );
+            if (data.status === 200) {
+              setIsProfileDeleted(!isProfileDeleted);
+            }
           }}
         >Delete</Card.Link>
       </Card.Body>
@@ -68,6 +77,8 @@ ProfileCard.propTypes = {
   editingCard: PropTypes.number.isRequired,
   setCardEditing: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
+  setIsProfileDeleted: PropTypes.func.isRequired,
+  isProfileDeleted: PropTypes.bool.isRequired,
 };
 
 export default ProfileCard;
