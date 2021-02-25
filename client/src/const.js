@@ -4,6 +4,13 @@ export const AppRoute = {
   ACCOUNT: '/account',
 };
 
+export const APIRoute = {
+  AUTH: '/api/auth',
+  GET_USERS: '/api/users',
+  DELETE_USER: '/api/users/delete',
+  GET_PROFILES: '/api/profiles/',
+};
+
 export const AuthorizationStatus = {
   AUTH: 'AUTH',
   NO_AUTH: 'NO_AUTH',

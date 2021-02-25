@@ -2,6 +2,7 @@ import React, {useState, createRef, useContext} from 'react';
 import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
 import {ButtonGroup, Button} from 'react-bootstrap';
+import {APIRoute} from '../../const';
 import './auth-form.css';
 
 const AuthorizationType = {
@@ -33,7 +34,11 @@ const AuthForm = () => {
       authData.isAdmin = isAdminCheckboxRef.current.checked;
     }
 
-    const data = await request(`/api/auth/${authType}`, 'POST', authData);
+    const data = await request(
+        `${APIRoute.AUTH}/${authType}`,
+        'POST',
+        authData,
+    );
 
     if (authType === AuthorizationType.LOGIN) {
       auth.login(
