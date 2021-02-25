@@ -1,12 +1,10 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useHttp} from '../../hooks/http.hook';
-import {AuthContext} from '../../context/AuthContext';
 import UserCard from '../user-card/user-сard';
 import {APIRoute} from '../../const';
 
 const UsersList = ({isActive}) => {
-  const {isUserAdmin} = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [editingCard, setCardEditing] = useState(-1);
   const [isUserDeleted, setIsUserDeleted] = useState(false);
@@ -15,8 +13,6 @@ const UsersList = ({isActive}) => {
   const getUsers = async () => {
     setUsers(await request(
         APIRoute.GET_USERS,
-        'GET',
-        {isUserAdmin},
     ));
   };
 

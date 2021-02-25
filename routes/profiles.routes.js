@@ -7,13 +7,6 @@ router.get(
     '/',
     async (req, res) => {
       try {
-        const {isUserAdmin} = req.body;
-        if (!isUserAdmin) {
-          return res.status(401).json({
-            message: 'Вы не админ',
-          });
-        }
-
         const profiles = await Profile.find();
         res.json(profiles);
       } catch (error) {

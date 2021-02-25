@@ -7,13 +7,6 @@ router.get(
     '/',
     async (req, res) => {
       try {
-        const {isUserAdmin} = req.body;
-        if (!isUserAdmin) {
-          return res.status(401).json({
-            message: 'Вы не админ',
-          });
-        }
-
         const users = await User.find();
         res.json(users);
       } catch (error) {
@@ -37,7 +30,6 @@ router.delete(
         }
 
         const userEmail = req.params.email;
-        console.log(userEmail);
         await User.deleteOne({email: userEmail});
 
         res.json({

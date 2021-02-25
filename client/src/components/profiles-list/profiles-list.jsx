@@ -7,7 +7,7 @@ import {AuthContext} from '../../context/AuthContext';
 import {APIRoute} from '../../const';
 
 const ProfilesList = ({isActive, listType}) => {
-  const {userMail, isUserAdmin} = useContext(AuthContext);
+  const {userMail} = useContext(AuthContext);
   const [editingCard, setCardEditing] = useState(-1);
   const [profiles, setProfiles] = useState([]);
   const [isProfileDeleted, setIsProfileDeleted] = useState(false);
@@ -18,8 +18,6 @@ const ProfilesList = ({isActive, listType}) => {
       listType === 'ProfilesNetwork' ?
         APIRoute.GET_PROFILES :
         `${APIRoute.GET_PROFILES}/${userMail}`,
-      'GET',
-      {isUserAdmin},
     ));
   };
 
