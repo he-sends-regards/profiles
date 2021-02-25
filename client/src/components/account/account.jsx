@@ -26,11 +26,11 @@ const MenuItems = [
 
 const Account = () => {
   const auth = useContext(AuthContext);
-  const [activeTab, setActiveTab] = useState('MyProfiles');
+  const [activeTab, setActiveTab] = useState('');
 
   return (
     <div className="account">
-      <Tab.Container id="left-tabs-example" defaultActiveKey="MyProfiles">
+      <Tab.Container id="left-tabs-example">
         <Row className="mx-0">
           <Col sm={2}>
             <Nav variant="pills" className="flex-column text-center">
