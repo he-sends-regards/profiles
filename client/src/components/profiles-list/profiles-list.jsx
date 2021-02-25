@@ -1,18 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {useHttp} from '../../hooks/http.hook';
 import {Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import ProfileCard from '../profile-card/profile-card';
+import {AuthContext} from '../../context/AuthContext';
 import {APIRoute} from '../../const';
 
-const ProfilesList = ({isActive}) => {
+const ProfilesList = ({isActive, listType}) => {
+  const {userMail} = useContext(AuthContext);
   const [editingCard, setCardEditing] = useState(-1);
   const [profiles, setProfiles] = useState([]);
   const [isProfileDeleted, setIsProfileDeleted] = useState(false);
   const {request} = useHttp();
 
   const getProfiles = async () => {
-    setProfiles(await request(APIRoute.GET_PROFILES));
+    setProfiles(await request(
+      listType === 'ProfilesNetwork' ?
+        APIRoute.GET_PROFILES :
+        `${APIRoute.GET_PROFILES}/${userMail}`,
+    ));
   };
 
   useEffect(() => {
@@ -67,6 +73,7 @@ const ProfilesList = ({isActive}) => {
 
 ProfilesList.propTypes = {
   isActive: PropTypes.bool.isRequired,
+  listType: PropTypes.oneOf(['MyProfiles', 'ProfilesNetwork']).isRequired,
 };
 
 export default ProfilesList;

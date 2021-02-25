@@ -17,6 +17,21 @@ router.get(
     },
 );
 
+router.get(
+    '/:userEmail',
+    async (req, res) => {
+      try {
+        const userProfiles = await Profile.find({owner: req.params.userEmail});
+
+        res.json(userProfiles);
+      } catch (error) {
+        res
+            .send(500)
+            .json({message: 'Профили не найдены'});
+      }
+    },
+);
+
 router.delete(
     '/delete/:id',
     async (req, res) => {

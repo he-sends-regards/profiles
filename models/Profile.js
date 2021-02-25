@@ -4,6 +4,10 @@ const {
 } = require('mongoose');
 
 const schema = new Schema({
+  owner: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,

@@ -79,6 +79,7 @@ const Account = () => {
               <Tab.Pane eventKey="MyProfiles">
                 <ProfilesList
                   isActive={activeTab === 'MyProfiles'}
+                  listType={'MyProfiles'}
                 />
               </Tab.Pane>
               {
@@ -88,6 +89,7 @@ const Account = () => {
                       <Tab.Pane eventKey="ProfilesNetwork">
                         <ProfilesList
                           isActive={activeTab === 'ProfilesNetwork'}
+                          listType={'ProfilesNetwork'}
                         />
                       </Tab.Pane>
                       <Tab.Pane eventKey="UsersNetwork">
