@@ -9,7 +9,7 @@ import './user-сard.css';
 const UserCard = ({user,
   editingCard, setCardEditing, isUserDeleted, setIsUserDeleted}) => {
   const {request} = useHttp();
-  const {userMail, logout} = useContext(AuthContext);
+  const {userMail, logout, isUserAdmin} = useContext(AuthContext);
 
   return (
     <Card className="user-card"
@@ -49,6 +49,7 @@ const UserCard = ({user,
               const data = await request(
                   `${APIRoute.DELETE_USER}/${user.email}`,
                   'DELETE',
+                  {isUserAdmin},
               );
               if (data.status === 200) {
                 if (user.email === userMail) {

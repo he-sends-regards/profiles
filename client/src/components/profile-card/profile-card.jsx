@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {Card} from 'react-bootstrap';
 import {useHttp} from '../../hooks/http.hook';
+import {AuthContext} from '../../context/AuthContext';
 import './profile-card.css';
 
 const ProfileCard = ({profile,
@@ -12,6 +13,7 @@ const ProfileCard = ({profile,
   isProfileDeleted,
 }) => {
   const {request} = useHttp();
+  const {isUserAdmin} = useContext(AuthContext);
 
   return (
     <Card className="profile-card" style={{
@@ -55,6 +57,7 @@ const ProfileCard = ({profile,
             const data = await request(
                 `/api/profiles/delete/${profile._id}`,
                 'DELETE',
+                {isUserAdmin},
             );
             if (data.status === 200) {
               setIsProfileDeleted(!isProfileDeleted);
@@ -74,7 +77,7 @@ ProfileCard.propTypes = {
     birthdate: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
   }).isRequired,
-  editingCard: PropTypes.number.isRequired,
+  editingCard: PropTypes.string.isRequired,
   setCardEditing: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   setIsProfileDeleted: PropTypes.func.isRequired,
