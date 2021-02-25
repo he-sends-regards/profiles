@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import {Card} from 'react-bootstrap';
 import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
+import {APIRoute} from '../../const';
 import './user-сard.css';
 
-const UserCard = ({user, editingCard, setCardEditing}) => {
+const UserCard = ({user,
+  editingCard, setCardEditing, isUserDeleted, setIsUserDeleted}) => {
   const {request} = useHttp();
   const {userMail, logout} = useContext(AuthContext);
 
@@ -44,13 +46,17 @@ const UserCard = ({user, editingCard, setCardEditing}) => {
               cursor: 'pointer',
             }}
             onClick={async () => {
-              await request(
-                  `/api/auth/users/delete/${user.email}`,
+              const data = await request(
+                  `${APIRoute.DELETE_USER}/${user.email}`,
                   'DELETE',
               );
-              if (user.email === userMail) {
-                logout();
-              }
+              if (data.status === 200) {
+                if (user.email === userMail) {
+                  logout();
+                } else {
+                  setIsUserDeleted(!isUserDeleted);
+                }
+              };
             }}
           >Delete</Card.Link>
         </div>
@@ -68,6 +74,8 @@ UserCard.propTypes = {
   }).isRequired,
   editingCard: PropTypes.number.isRequired,
   setCardEditing: PropTypes.func.isRequired,
+  isUserDeleted: PropTypes.bool.isRequired,
+  setIsUserDeleted: PropTypes.func.isRequired,
 };
 
 export default UserCard;

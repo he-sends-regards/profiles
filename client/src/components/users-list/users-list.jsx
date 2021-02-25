@@ -2,21 +2,24 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useHttp} from '../../hooks/http.hook';
 import UserCard from '../user-card/user-сard';
+import {APIRoute} from '../../const';
 
 const UsersList = ({isActive}) => {
   const [users, setUsers] = useState([]);
   const [editingCard, setCardEditing] = useState(-1);
+  const [isUserDeleted, setIsUserDeleted] = useState(false);
   const {request} = useHttp();
 
   const getUsers = async () => {
-    setUsers(await request('/api/auth/users/'));
+    setUsers(await request(APIRoute.GET_USERS));
   };
 
   useEffect(() => {
     if (isActive) {
       getUsers();
     }
-  }, [isActive]);
+    setIsUserDeleted(false);
+  }, [isActive, isUserDeleted]);
 
   return (
     <div style={{
@@ -33,6 +36,8 @@ const UsersList = ({isActive}) => {
               user={user}
               editingCard={editingCard}
               setCardEditing={setCardEditing}
+              isUserDeleted={isUserDeleted}
+              setIsUserDeleted={setIsUserDeleted}
             />
           );
         })
