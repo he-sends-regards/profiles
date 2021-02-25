@@ -7,7 +7,9 @@ import {APIRoute, HTTPStatus} from '../../const';
 import './user-сard.css';
 
 const UserCard = ({user,
-  editingCard, setCardEditing, isUserDeleted, setIsUserDeleted}) => {
+  editingCard, setCardEditing, isUserDeleted, setIsUserDeleted,
+  setIsUserUpdated},
+) => {
   const {request} = useHttp();
   const {userMail, logout, isUserAdmin} = useContext(AuthContext);
 
@@ -23,6 +25,32 @@ const UserCard = ({user,
         <Card.Subtitle className="mb-2 text-muted">
           {user.email}
         </Card.Subtitle>
+        <Card.Text className="d-flex flex-column">
+          <span>
+              Is admin: {`${user.isAdmin}`}
+          </span>
+          {
+            !user.isAdmin && (
+              <Card.Link style={{
+                cursor: 'pointer',
+                color: 'green',
+              }}
+              onClick={async () => {
+                const data = await request(
+                    `api/users/updateToAdmin/${user.email}`,
+                    'PUT',
+                );
+                console.log(data);
+                if (data.status === HTTPStatus.OK) {
+                  setIsUserUpdated(true);
+                }
+              }}
+              >
+                update to admin &uarr;
+              </Card.Link>
+            )
+          }
+        </Card.Text>
         <div>
           {
             editingCard === user._id ?
@@ -72,11 +100,13 @@ UserCard.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
+    isAdmin: PropTypes.bool.isRequired,
   }).isRequired,
   editingCard: PropTypes.number.isRequired,
   setCardEditing: PropTypes.func.isRequired,
   isUserDeleted: PropTypes.bool.isRequired,
   setIsUserDeleted: PropTypes.func.isRequired,
+  setIsUserUpdated: PropTypes.func.isRequired,
 };
 
 export default UserCard;

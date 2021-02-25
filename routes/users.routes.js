@@ -65,4 +65,25 @@ router.get(
     },
 );
 
+router.put(
+    '/updateToAdmin/:email',
+    async (req, res) => {
+      try {
+        await User.updateOne(
+            {email: req.params.email},
+            {isAdmin: true},
+        );
+
+        res.json({
+          status: 200,
+          message: `Пользователь '${req.params.email}' повышен до админа`,
+        });
+      } catch (error) {
+        res.sendStatus(500).json({
+          message: 'что-то пошло не так',
+        });
+      }
+    },
+);
+
 module.exports = router;

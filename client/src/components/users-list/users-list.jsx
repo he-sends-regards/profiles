@@ -8,6 +8,7 @@ const UsersList = ({isActive}) => {
   const [users, setUsers] = useState([]);
   const [editingCard, setCardEditing] = useState(-1);
   const [isUserDeleted, setIsUserDeleted] = useState(false);
+  const [isUserUpdated, setIsUserUpdated] = useState(false);
   const {request} = useHttp();
 
   const getUsers = async () => {
@@ -20,8 +21,14 @@ const UsersList = ({isActive}) => {
     if (isActive) {
       getUsers();
     }
+    if (isUserDeleted) {
+      setIsUserDeleted(false);
+    }
+    if (isUserUpdated) {
+      setIsUserUpdated(false);
+    }
     setIsUserDeleted(false);
-  }, [isActive, isUserDeleted]);
+  }, [isActive, isUserDeleted, isUserUpdated]);
 
   return (
     <div style={{
@@ -40,6 +47,8 @@ const UsersList = ({isActive}) => {
               setCardEditing={setCardEditing}
               isUserDeleted={isUserDeleted}
               setIsUserDeleted={setIsUserDeleted}
+              isUserUpdated={isUserUpdated}
+              setIsUserUpdated={setIsUserUpdated}
             />
           );
         })
