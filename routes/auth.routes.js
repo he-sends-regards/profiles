@@ -1,8 +1,8 @@
 const Router = require('express');
 const bcrypt = require('bcryptjs');
-const config = require('config');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User.js');
+const jwtSecret = require('../const.js');
 const {
   check,
   validationResult,
@@ -125,7 +125,7 @@ router.post(
         const token = jwt.sign({
           userId: user.id, // Сюда также можно передать email и пароль
         },
-        config.get('jwtSecret'), {
+        jwtSecret, {
           expiresIn: '1h',
         },
         );

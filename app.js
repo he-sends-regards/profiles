@@ -1,6 +1,6 @@
 const express = require('express');
-const config = require('config');
 const mongoose = require('mongoose');
+const PORT = require('./const.js');
 
 const app = express();
 
@@ -9,8 +9,6 @@ app.use(express.json({
 }));
 app.use('/api/auth', require('./routes/auth.routes.js'));
 app.use('/api/profiles', require('./routes/profiles.routes.js'));
-
-const PORT = config.get('port');
 
 const start = async () => {
   try {
