@@ -50,7 +50,7 @@ const AuthForm = () => {
       );
     }
 
-    if (authType === AuthorizationType.REGISTER) {
+    if (authType === AuthorizationType.REGISTER && data.status !== 400) {
       alert('You have been registered!');
       setAuthType(AuthorizationType.LOGIN);
     }

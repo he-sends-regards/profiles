@@ -29,7 +29,8 @@ router.post(
         const errors = validationResult(req);
 
         if (!errors.isEmpty) {
-          return res.status(400).json({
+          return res.json({
+            status: 400,
             errors: errors.array(),
             message: 'Некорректные данные при регистрации',
           });
@@ -48,6 +49,7 @@ router.post(
 
         if (candidate) {
           return res.status(400).json({
+            status: 400,
             message: 'Такой пользователь уже существует',
           });
         }
