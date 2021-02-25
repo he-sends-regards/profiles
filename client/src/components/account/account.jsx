@@ -36,10 +36,14 @@ const Account = () => {
             <Nav variant="pills" className="flex-column text-center">
               <h3>
                 <img
-                  src="https://www.flaticon.com/svg/vstatic/svg/61/61205.svg?token=exp=1614162945~hmac=6066da504f43d54182f04003a23f65d0"
+                  src={
+                    auth.isUserAdmin ?
+                      'https://www.flaticon.com/svg/vstatic/svg/2144/2144111.svg?token=exp=1614266360~hmac=85c89017fad09f71cb37172b1a1619bd' :
+                      'https://www.flaticon.com/svg/vstatic/svg/61/61205.svg?token=exp=1614162945~hmac=6066da504f43d54182f04003a23f65d0'
+                  }
                   alt="Account logo"
-                  width="30px"
-                  style={{filter: 'invert()'}}
+                  width="40px"
+                  style={{filter: !auth.isUserAdmin && 'invert()'}}
                 />
                 <br/>
                 {auth.userName}

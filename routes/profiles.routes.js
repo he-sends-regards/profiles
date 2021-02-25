@@ -1,5 +1,5 @@
 const Router = require('express');
-const Profile = require('../models/Profile');
+const Profile = require('../models/Profile.js');
 
 const router = new Router();
 
@@ -54,6 +54,28 @@ router.delete(
         res
             .send(500)
             .json({message: 'Профили не найдены'});
+      }
+    },
+);
+
+router.post(
+    '/add',
+    async (req, res) => {
+      try {
+        console.log(req.body);
+
+        const newProfile = new Profile(req.body);
+
+        await newProfile.save();
+
+        res.json({
+          status: 200,
+          message: 'Профиль создан',
+        });
+      } catch (error) {
+        res
+            .send(500)
+            .json({message: 'Профили не создан'});
       }
     },
 );

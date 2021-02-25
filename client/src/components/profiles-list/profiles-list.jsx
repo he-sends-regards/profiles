@@ -5,10 +5,13 @@ import PropTypes from 'prop-types';
 import ProfileCard from '../profile-card/profile-card';
 import {AuthContext} from '../../context/AuthContext';
 import {APIRoute} from '../../const';
+import ProfileCardEdit from '../profile-card/components/profile-card-edit';
 
 const ProfilesList = ({isActive, listType}) => {
   const {userMail} = useContext(AuthContext);
   const [editingCard, setCardEditing] = useState('');
+  const [isCardCreating, setIsCardCreating] = useState(false);
+  const [isProfileCreated, setIsProfileCreated] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [isProfileDeleted, setIsProfileDeleted] = useState(false);
   const {request} = useHttp();
@@ -25,8 +28,12 @@ const ProfilesList = ({isActive, listType}) => {
     if (isActive) {
       getProfiles();
     }
+    if (isProfileCreated) {
+      setIsProfileCreated(false);
+      getProfiles();
+    }
     setIsProfileDeleted(false);
-  }, [isActive, isProfileDeleted]);
+  }, [isActive, isProfileDeleted, isProfileCreated]);
 
   return (
     <div style={{
@@ -46,27 +53,38 @@ const ProfilesList = ({isActive, listType}) => {
               setCardEditing={setCardEditing}
               setIsProfileDeleted={setIsProfileDeleted}
               isProfileDeleted={isProfileDeleted}
+              isCardCreating={isCardCreating}
+              setIsCardCreating={setIsCardCreating}
             />
           );
         })
       }
-      <div style={{
-        width: '200px',
-        height: '200px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        <Button style={{
-          width: '30%',
-          height: '30%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        size="lg"
-        >+</Button>
-      </div>
+      {
+        listType === 'MyProfiles' && (isCardCreating ? (
+          <ProfileCardEdit setIsCardCreating={setIsCardCreating}
+            setIsProfileCreated={setIsProfileCreated} />
+        ) : (
+          <div style={{
+            width: '200px',
+            height: '200px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <Button style={{
+              width: '30%',
+              height: '30%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onClick={() => setIsCardCreating(!isCardCreating)}
+            size="lg"
+            >+</Button>
+          </div>
+        )
+        )
+      }
     </div>
   );
 };

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Card} from 'react-bootstrap';
 import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
-import {APIRoute} from '../../const';
+import {APIRoute, HTTPStatus} from '../../const';
 import './user-сard.css';
 
 const UserCard = ({user,
@@ -51,7 +51,7 @@ const UserCard = ({user,
                   'DELETE',
                   {isUserAdmin},
               );
-              if (data.status === 200) {
+              if (data.status === HTTPStatus) {
                 if (user.email === userMail) {
                   logout();
                 } else {

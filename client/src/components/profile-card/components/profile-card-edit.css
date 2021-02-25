@@ -1,0 +1,41 @@
+.user-card-edit {
+  color: black;
+  background-color: white;
+  font-size: 1.1rem;
+  width: 419px;
+  height: 419px;
+  border: 1px solid white;
+  border-radius: .25rem;
+  margin: 0px 10px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.user-card-edit label {
+  margin: 0 1rem;
+}
+
+.sumbit-btn {
+  width: 80%;
+  margin: 0 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.user-card-edit__close-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-card-edit__close_btn {
+  border: 0px;
+  background-color: #fff;
+}
+
+.user-card-edit__close-img {
+  width: 2rem;
+  margin: .5rem;
+}

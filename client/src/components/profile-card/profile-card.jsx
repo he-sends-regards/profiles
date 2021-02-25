@@ -4,6 +4,7 @@ import {Card} from 'react-bootstrap';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
 import './profile-card.css';
+import {HTTPStatus} from '../../const';
 
 const ProfileCard = ({profile,
   setCardEditing,
@@ -59,7 +60,7 @@ const ProfileCard = ({profile,
                 'DELETE',
                 {isUserAdmin},
             );
-            if (data.status === 200) {
+            if (data.status === HTTPStatus.OK) {
               setIsProfileDeleted(!isProfileDeleted);
             }
           }}
