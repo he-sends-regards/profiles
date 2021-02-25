@@ -1,9 +1,12 @@
 import React, {useContext, useState} from 'react';
 import {Nav, Tab, Row, Col, Button} from 'react-bootstrap';
 import {AuthContext} from '../../context/AuthContext';
+import Dashboard from '../dashboard/dashboard';
 import ProfilesList from '../profiles-list/profiles-list';
 import UsersList from '../users-list/users-list';
 import './account.css';
+import accSvg from './img/account-logo.svg';
+import kingSvg from './img/king-logo.svg';
 
 const MenuItems = [
   {
@@ -38,8 +41,8 @@ const Account = () => {
                 <img
                   src={
                     auth.isUserAdmin ?
-                      'https://www.flaticon.com/svg/vstatic/svg/2144/2144111.svg?token=exp=1614266360~hmac=85c89017fad09f71cb37172b1a1619bd' :
-                      'https://www.flaticon.com/svg/vstatic/svg/61/61205.svg?token=exp=1614162945~hmac=6066da504f43d54182f04003a23f65d0'
+                      kingSvg :
+                      accSvg
                   }
                   alt="Account logo"
                   width="40px"
@@ -102,7 +105,9 @@ const Account = () => {
                         />
                       </Tab.Pane>
                       <Tab.Pane eventKey="Dashboard">
-                        <h3>1</h3>
+                        <Dashboard
+                          isActive={activeTab === 'ProfilesNetwork'}
+                        />
                       </Tab.Pane>
                     </>
                   )

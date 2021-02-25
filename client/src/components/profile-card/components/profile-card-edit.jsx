@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import './profile-card-edit.css';
 import {APIRoute, HTTPStatus} from '../../../const';
 import {Button} from 'react-bootstrap';
+import cancelSvg from './img/cancel.svg';
 
 const ProfileCardEdit = ({setIsCardCreating, setIsProfileCreated}) => {
   const {userMail} = useContext(AuthContext);
@@ -43,7 +44,7 @@ const ProfileCardEdit = ({setIsCardCreating, setIsProfileCreated}) => {
           className="user-card-edit__close_btn"
           onClick={() => setIsCardCreating(false)}>
           <img
-            src="https://www.flaticon.com/svg/vstatic/svg/1828/1828774.svg?token=exp=1614260867~hmac=6dcdc6b3ffff9050e59d2737d8330f73"
+            src={cancelSvg}
             className="user-card-edit__close-img"
             alt="Close creation of the new profile"
           />

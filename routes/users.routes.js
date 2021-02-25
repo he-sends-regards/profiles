@@ -1,5 +1,6 @@
 const Router = require('express');
 const User = require('../models/User.js');
+const Profile = require('../models/Profile.js');
 
 const router = new Router();
 
@@ -34,6 +35,27 @@ router.delete(
 
         res.json({
           message: 'Пользователь удалён',
+        });
+      } catch (error) {
+        res.sendStatus(500).json({
+          message: 'что-то пошло не так',
+        });
+      }
+    },
+);
+
+router.get(
+    '/usersCount',
+    async (req, res) => {
+      try {
+        const usersCount = (await User.find()).length;
+        const profiles = await Profile.find();
+        const profilesCount = profiles.length;
+
+        res.json({
+          usersCount,
+          profilesCount,
+          profiles,
         });
       } catch (error) {
         res.sendStatus(500).json({
