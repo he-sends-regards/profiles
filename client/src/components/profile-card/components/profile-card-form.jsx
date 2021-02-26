@@ -148,7 +148,9 @@ ProfileCardForm.propTypes = {
   setIsCardCreating: PropTypes.func.isRequired,
   setIsCardEditing: PropTypes.func.isRequired,
   setIsProfileDataChanged: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(['edit', 'create']).isRequired,
+  type: PropTypes.oneOf([
+    ProfileFormType.CREATE, ProfileFormType.EDIT,
+  ]).isRequired,
   profile: PropTypes.object,
   listType: PropTypes.oneOf(
       [MenuItem.MY_PROFILES, MenuItem.PROFILES_NETWORK],

@@ -29,23 +29,6 @@ exports[`renders correctly 1`] = `
           <br />
         </h3>
         <br />
-        <div
-          className="nav-item"
-        >
-          <a
-            aria-controls="left-tabs-example-tabpane-MyProfiles"
-            aria-selected={false}
-            className="nav-link"
-            data-rb-event-key="MyProfiles"
-            href="#"
-            id="left-tabs-example-tab-MyProfiles"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            role="tab"
-          >
-            My profiles
-          </a>
-        </div>
         <br />
         <button
           className="account__logout-btn btn btn-outline-danger"
@@ -65,9 +48,9 @@ exports[`renders correctly 1`] = `
       >
         <div
           aria-hidden={true}
-          aria-labelledby="left-tabs-example-tab-MyProfiles"
+          aria-labelledby="left-tabs-example-tab-[object Object]"
           className="fade tab-pane"
-          id="left-tabs-example-tabpane-MyProfiles"
+          id="left-tabs-example-tabpane-[object Object]"
           role="tabpanel"
         >
           <div

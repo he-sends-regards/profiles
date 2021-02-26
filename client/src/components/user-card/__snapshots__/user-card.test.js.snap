@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders correctly 1`] = `
+<div
+  className="user-card card"
+>
+  <div
+    className="user-card_body card-body"
+  >
+    <div
+      className="card-title h5"
+    >
+      Dan
+    </div>
+    <div
+      className="mb-2 text-muted card-subtitle h6"
+    >
+      test@gmail.com
+    </div>
+    <p
+      className="d-flex flex-column card-text"
+    >
+      <span>
+        Is admin: 
+        true
+      </span>
+    </p>
+    <div>
+      <a
+        className="card-link"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "red",
+            "cursor": "pointer",
+          }
+        }
+      >
+        Delete
+      </a>
+    </div>
+  </div>
+</div>
+`;
