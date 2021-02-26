@@ -18,7 +18,7 @@ const ProfilesList = ({isActive, listType}) => {
 
   const getProfiles = async () => {
     setProfiles(await request(
-      listType === 'ProfilesNetwork' ?
+      listType === MenuItem.PROFILES_NETWORK ?
         APIRoute.GET_PROFILES :
         `${APIRoute.GET_PROFILES}/${userMail}`,
     ));

@@ -26,7 +26,7 @@ const ProfileCardForm = ({
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
-    const newProfileData = listType === 'ProfilesNetwork' ? {
+    const newProfileData = listType === MenuItem.PROFILES_NETWORK ? {
       birthdate: calendarRef.current.value,
       gender: genderRef.current.value,
       name: nameRef.current.value,
