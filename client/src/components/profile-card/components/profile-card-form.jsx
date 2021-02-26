@@ -26,7 +26,7 @@ const ProfileCardForm = ({
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
-    const newProfileData = listType === MenuItem.PROFILES_NETWORK ? {
+    const newProfileData = listType === MenuItem.PROFILES_NETWORK.id ? {
       birthdate: calendarRef.current.value,
       gender: genderRef.current.value,
       name: nameRef.current.value,
@@ -146,14 +146,14 @@ const ProfileCardForm = ({
 
 ProfileCardForm.propTypes = {
   setIsCardCreating: PropTypes.func.isRequired,
-  setIsCardEditing: PropTypes.func.isRequired,
+  setIsCardEditing: PropTypes.func,
   setIsProfileDataChanged: PropTypes.func.isRequired,
   type: PropTypes.oneOf([
     ProfileFormType.CREATE, ProfileFormType.EDIT,
   ]).isRequired,
   profile: PropTypes.object,
   listType: PropTypes.oneOf(
-      [MenuItem.MY_PROFILES, MenuItem.PROFILES_NETWORK],
+      [MenuItem.MY_PROFILES.id, MenuItem.PROFILES_NETWORK.id],
   ),
 };
 

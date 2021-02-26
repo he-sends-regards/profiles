@@ -86,7 +86,7 @@ ProfileCard.propTypes = {
   setIsCardCreating: PropTypes.func.isRequired,
   isCardEditing: PropTypes.bool,
   listType: PropTypes.oneOf(
-      [MenuItem.MY_PROFILES, MenuItem.PROFILES_NETWORK],
+      [MenuItem.MY_PROFILES.id, MenuItem.PROFILES_NETWORK.id],
   ).isRequired,
 };
 

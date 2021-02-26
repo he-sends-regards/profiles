@@ -18,7 +18,7 @@ const ProfilesList = ({isActive, listType}) => {
 
   const getProfiles = async () => {
     setProfiles(await request(
-      listType === MenuItem.PROFILES_NETWORK ?
+      listType === MenuItem.PROFILES_NETWORK.id ?
         APIRoute.GET_PROFILES :
         `${APIRoute.GET_PROFILES}/${userMail}`,
     ));
@@ -49,7 +49,7 @@ const ProfilesList = ({isActive, listType}) => {
         })
       }
       {
-        listType === MenuItem.MY_PROFILES && (isCardCreating ? (
+        listType === MenuItem.MY_PROFILES.id && (isCardCreating ? (
           <ProfileCardForm
             setIsProfileDataChanged={setIsProfileDataChanged}
             setIsCardCreating={setIsCardCreating}
@@ -86,7 +86,7 @@ const ProfilesList = ({isActive, listType}) => {
 ProfilesList.propTypes = {
   isActive: PropTypes.bool.isRequired,
   listType: PropTypes.oneOf(
-      [MenuItem.MY_PROFILES, MenuItem.PROFILES_NETWORK],
+      [MenuItem.MY_PROFILES.id, MenuItem.PROFILES_NETWORK.id],
   ).isRequired,
 };
 

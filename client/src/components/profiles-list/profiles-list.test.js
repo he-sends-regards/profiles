@@ -8,7 +8,7 @@ it('Renders correctly', () => {
       .create(
           <ProfilesList
             isActive={true}
-            listType={MenuItem.PROFILES_NETWORK}
+            listType={MenuItem.PROFILES_NETWORK.id}
           />,
       )
       .toJSON();

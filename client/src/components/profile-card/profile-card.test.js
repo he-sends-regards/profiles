@@ -23,7 +23,7 @@ it('Renders correctly', () => {
             setIsProfileDataChanged={noop}
             setIsCardCreating={noop}
             isCardCreating={false}
-            listType={MenuItem.MY_PROFILES}
+            listType={MenuItem.MY_PROFILES.id}
           />,
       )
       .toJSON();

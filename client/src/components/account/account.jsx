@@ -69,30 +69,30 @@ const Account = () => {
 
           <Col sm={10}>
             <Tab.Content>
-              <Tab.Pane eventKey={MenuItem.MY_PROFILES}>
+              <Tab.Pane eventKey={MenuItem.MY_PROFILES.id}>
                 <ProfilesList
-                  isActive={activeTab === MenuItem.MY_PROFILES}
-                  listType={MenuItem.MY_PROFILES}
+                  isActive={activeTab === MenuItem.MY_PROFILES.id}
+                  listType={MenuItem.MY_PROFILES.id}
                 />
               </Tab.Pane>
               {
                 auth.isUserAdmin &&
                   (
                     <>
-                      <Tab.Pane eventKey={MenuItem.PROFILES_NETWORK}>
+                      <Tab.Pane eventKey={MenuItem.PROFILES_NETWORK.id}>
                         <ProfilesList
-                          isActive={activeTab === MenuItem.PROFILES_NETWORK}
-                          listType={MenuItem.PROFILES_NETWORK}
+                          isActive={activeTab === MenuItem.PROFILES_NETWORK.id}
+                          listType={MenuItem.PROFILES_NETWORK.id}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey={MenuItem.USERS_NETWORK}>
+                      <Tab.Pane eventKey={MenuItem.USERS_NETWORK.id}>
                         <UsersList
-                          isActive={activeTab === MenuItem.USERS_NETWORK}
+                          isActive={activeTab === MenuItem.USERS_NETWORK.id}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey={MenuItem.DASHBOARD}>
+                      <Tab.Pane eventKey={MenuItem.DASHBOARD.id}>
                         <Dashboard
-                          isActive={activeTab === MenuItem.DASHBOARD}
+                          isActive={activeTab === MenuItem.DASHBOARD.id}
                         />
                       </Tab.Pane>
                     </>

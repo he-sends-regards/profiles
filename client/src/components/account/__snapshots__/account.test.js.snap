@@ -48,9 +48,9 @@ exports[`renders correctly 1`] = `
       >
         <div
           aria-hidden={true}
-          aria-labelledby="left-tabs-example-tab-[object Object]"
+          aria-labelledby="left-tabs-example-tab-MyProfiles"
           className="fade tab-pane"
-          id="left-tabs-example-tabpane-[object Object]"
+          id="left-tabs-example-tabpane-MyProfiles"
           role="tabpanel"
         >
           <div
