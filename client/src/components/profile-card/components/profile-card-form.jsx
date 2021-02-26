@@ -1,13 +1,13 @@
 import React, {useContext, createRef} from 'react';
-import {AuthContext} from '../../../context/AuthContext';
-import {useHttp} from '../../../hooks/http.hook';
 import PropTypes from 'prop-types';
-import './profile-card-edit.css';
-import {APIRoute, HTTPStatus} from '../../../const';
 import {Button} from 'react-bootstrap';
 import cancelSvg from './img/cancel.svg';
+import {APIRoute, HTTPStatus} from '../../../const';
+import {AuthContext} from '../../../context/AuthContext';
+import {useHttp} from '../../../hooks/http.hook';
+import './profile-card-form.css';
 
-const ProfileCardEdit = ({setIsCardCreating, setIsProfileCreated}) => {
+const ProfileCardForm = ({setIsCardCreating, setIsProfileDataChanged}) => {
   const {userMail} = useContext(AuthContext);
   const {request} = useHttp();
 
@@ -32,7 +32,7 @@ const ProfileCardEdit = ({setIsCardCreating, setIsProfileCreated}) => {
     );
 
     if (data.status === HTTPStatus.OK) {
-      setIsProfileCreated(true);
+      setIsProfileDataChanged(true);
       setIsCardCreating(false);
     }
   };
@@ -89,9 +89,9 @@ const ProfileCardEdit = ({setIsCardCreating, setIsProfileCreated}) => {
   );
 };
 
-ProfileCardEdit.propTypes = {
+ProfileCardForm.propTypes = {
   setIsCardCreating: PropTypes.func.isRequired,
-  setIsProfileCreated: PropTypes.func.isRequired,
+  setIsProfileDataChanged: PropTypes.func.isRequired,
 };
 
-export default ProfileCardEdit;
+export default ProfileCardForm;

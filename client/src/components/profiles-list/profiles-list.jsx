@@ -1,19 +1,19 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {useHttp} from '../../hooks/http.hook';
-import {Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import {Button} from 'react-bootstrap';
 import ProfileCard from '../profile-card/profile-card';
+import ProfileCardForm from '../profile-card/components/profile-card-form';
 import {AuthContext} from '../../context/AuthContext';
+import {useHttp} from '../../hooks/http.hook';
 import {APIRoute} from '../../const';
-import ProfileCardEdit from '../profile-card/components/profile-card-edit';
 
 const ProfilesList = ({isActive, listType}) => {
-  const {userMail} = useContext(AuthContext);
-  const [editingCard, setCardEditing] = useState('');
-  const [isCardCreating, setIsCardCreating] = useState(false);
-  const [isProfileCreated, setIsProfileCreated] = useState(false);
   const [profiles, setProfiles] = useState([]);
-  const [isProfileDeleted, setIsProfileDeleted] = useState(false);
+  const [editingCard, setCardEditing] = useState('');
+  const [isProfileDataChanged, setIsProfileDataChanged] = useState(false);
+  const [isCardCreating, setIsCardCreating] = useState(false);
+
+  const {userMail} = useContext(AuthContext);
   const {request} = useHttp();
 
   const getProfiles = async () => {
@@ -25,15 +25,9 @@ const ProfilesList = ({isActive, listType}) => {
   };
 
   useEffect(() => {
-    if (isActive) {
-      getProfiles();
-    }
-    if (isProfileCreated) {
-      setIsProfileCreated(false);
-      getProfiles();
-    }
-    setIsProfileDeleted(false);
-  }, [isActive, isProfileDeleted, isProfileCreated]);
+    isActive && getProfiles();
+    isProfileDataChanged && setIsProfileDataChanged(false);
+  }, [isActive, isProfileDataChanged]);
 
   return (
     <div style={{
@@ -51,18 +45,17 @@ const ProfilesList = ({isActive, listType}) => {
               index={i}
               editingCard={editingCard}
               setCardEditing={setCardEditing}
-              setIsProfileDeleted={setIsProfileDeleted}
-              isProfileDeleted={isProfileDeleted}
               isCardCreating={isCardCreating}
               setIsCardCreating={setIsCardCreating}
+              setIsProfileDataChanged={setIsProfileDataChanged}
             />
           );
         })
       }
       {
         listType === 'MyProfiles' && (isCardCreating && !editingCard ? (
-          <ProfileCardEdit setIsCardCreating={setIsCardCreating}
-            setIsProfileCreated={setIsProfileCreated} />
+          <ProfileCardForm setIsCardCreating={setIsCardCreating}
+            setIsProfileDataChanged={setIsProfileDataChanged} />
         ) : (
           <div style={{
             width: '200px',

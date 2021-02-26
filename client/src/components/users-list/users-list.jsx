@@ -7,8 +7,7 @@ import {APIRoute} from '../../const';
 const UsersList = ({isActive}) => {
   const [users, setUsers] = useState([]);
   const [editingCard, setCardEditing] = useState(-1);
-  const [isUserDeleted, setIsUserDeleted] = useState(false);
-  const [isUserUpdated, setIsUserUpdated] = useState(false);
+  const [isUserDataChanged, setIsUserDataChanged] = useState(false);
   const {request} = useHttp();
 
   const getUsers = async () => {
@@ -21,13 +20,10 @@ const UsersList = ({isActive}) => {
     if (isActive) {
       getUsers();
     }
-    if (isUserDeleted) {
-      setIsUserDeleted(false);
+    if (isUserDataChanged) {
+      setIsUserDataChanged(false);
     }
-    if (isUserUpdated) {
-      setIsUserUpdated(false);
-    }
-  }, [isActive, isUserDeleted, isUserUpdated]);
+  }, [isActive, isUserDataChanged]);
 
   return (
     <div style={{
@@ -44,10 +40,7 @@ const UsersList = ({isActive}) => {
               user={user}
               editingCard={editingCard}
               setCardEditing={setCardEditing}
-              isUserDeleted={isUserDeleted}
-              setIsUserDeleted={setIsUserDeleted}
-              isUserUpdated={isUserUpdated}
-              setIsUserUpdated={setIsUserUpdated}
+              setIsUserDataChanged={setIsUserDataChanged}
             />
           );
         })

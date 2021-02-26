@@ -6,8 +6,8 @@ import {useHttp} from '../../hooks/http.hook';
 import {APIRoute, HTTPStatus} from '../../const';
 import './user-сard.css';
 
-const UserCard = ({user,
-  editingCard, setCardEditing, setIsUserDeleted, setIsUserUpdated},
+const UserCard = (
+    {user, editingCard, setCardEditing, setIsUserDataChanged},
 ) => {
   const {request} = useHttp();
   const {userMail, logout, isUserAdmin} = useContext(AuthContext);
@@ -41,7 +41,7 @@ const UserCard = ({user,
                 );
                 console.log(data);
                 if (data.status === HTTPStatus.OK) {
-                  setIsUserUpdated(true);
+                  setIsUserDataChanged(true);
                 }
               }}
               >
@@ -82,7 +82,7 @@ const UserCard = ({user,
                 if (user.email === userMail) {
                   logout();
                 } else {
-                  setIsUserDeleted(true);
+                  setIsUserDataChanged(true);
                 }
               };
             }}
@@ -103,8 +103,7 @@ UserCard.propTypes = {
   }).isRequired,
   editingCard: PropTypes.number.isRequired,
   setCardEditing: PropTypes.func.isRequired,
-  setIsUserDeleted: PropTypes.func.isRequired,
-  setIsUserUpdated: PropTypes.func.isRequired,
+  setIsUserDataChanged: PropTypes.func.isRequired,
 };
 
 export default UserCard;

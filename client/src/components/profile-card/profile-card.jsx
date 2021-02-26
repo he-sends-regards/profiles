@@ -10,8 +10,7 @@ const ProfileCard = ({profile,
   setCardEditing,
   editingCard,
   index,
-  setIsProfileDeleted,
-  isProfileDeleted,
+  setIsProfileDataChanged,
 }) => {
   const {request} = useHttp();
   const {isUserAdmin} = useContext(AuthContext);
@@ -61,7 +60,7 @@ const ProfileCard = ({profile,
                 {isUserAdmin},
             );
             if (data.status === HTTPStatus.OK) {
-              setIsProfileDeleted(!isProfileDeleted);
+              setIsProfileDataChanged(true);
             }
           }}
         >Delete</Card.Link>
@@ -81,8 +80,7 @@ ProfileCard.propTypes = {
   editingCard: PropTypes.string.isRequired,
   setCardEditing: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  setIsProfileDeleted: PropTypes.func.isRequired,
-  isProfileDeleted: PropTypes.bool.isRequired,
+  setIsProfileDataChanged: PropTypes.func.isRequired,
 };
 
 export default ProfileCard;
