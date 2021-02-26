@@ -1,25 +1,34 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Card} from 'react-bootstrap';
+import ProfileCardForm from './components/profile-card-form';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
+import {HTTPStatus, ProfileFormType} from '../../const';
 import './profile-card.css';
-import {HTTPStatus} from '../../const';
 
-const ProfileCard = ({profile,
-  setCardEditing,
-  editingCard,
+const ProfileCard = ({
+  profile,
   index,
   setIsProfileDataChanged,
+  setIsCardCreating,
+  listType,
 }) => {
   const {request} = useHttp();
   const {isUserAdmin} = useContext(AuthContext);
+  const [isCardEditing, setIsCardEditing] = useState(false);
 
-  return (
-    <Card className="profile-card" style={{
-      width: editingCard === profile._id ? '420px' : '200px',
-      height: editingCard === profile._id ? '420px' : '200px',
-    }}>
+  return isCardEditing ? (
+    <ProfileCardForm
+      profile={profile}
+      type={ProfileFormType.EDIT}
+      setIsProfileDataChanged={setIsProfileDataChanged}
+      setIsCardCreating={setIsCardCreating}
+      setIsCardEditing={setIsCardEditing}
+      listType={listType}
+    />
+  ) : (
+    <Card className="profile-card">
       <Card.Body>
         <Card.Title>Profile #{index}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
@@ -32,23 +41,17 @@ const ProfileCard = ({profile,
           </span>
           <span>City: {profile.city}</span>
         </Card.Text>
-        {
-          editingCard === profile._id ?
-            (
-              <Card.Link style={{cursor: 'pointer'}} onClick={() => {
-                setCardEditing('');
-              }}>
-                X
-              </Card.Link>
-            ) :
-            (
-              <Card.Link style={{cursor: 'pointer'}} onClick={() => {
-                setCardEditing(profile._id);
-              }}>
-                Edit
-              </Card.Link>
-            )
-        }
+
+        <Card.Link
+          style={{cursor: 'pointer'}}
+          onClick={() => {
+            setIsCardCreating(false);
+            setIsCardEditing(true);
+          }}
+        >
+          Edit
+        </Card.Link>
+
         <Card.Link
           style={{
             cursor: 'pointer',
@@ -77,10 +80,12 @@ ProfileCard.propTypes = {
     birthdate: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
   }).isRequired,
-  editingCard: PropTypes.string.isRequired,
-  setCardEditing: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   setIsProfileDataChanged: PropTypes.func.isRequired,
+  setIsCardEditing: PropTypes.func,
+  setIsCardCreating: PropTypes.func.isRequired,
+  isCardEditing: PropTypes.bool,
+  listType: PropTypes.oneOf(['MyProfiles', 'ProfilesNetwork']).isRequired,
 };
 
 export default ProfileCard;

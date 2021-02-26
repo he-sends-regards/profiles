@@ -19,3 +19,8 @@ export const AuthorizationStatus = {
 export const HTTPStatus = {
   OK: 200,
 };
+
+export const ProfileFormType = {
+  CREATE: 'CREATE',
+  EDIT: 'EDIT',
+};

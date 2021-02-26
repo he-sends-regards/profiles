@@ -32,6 +32,28 @@ router.get(
     },
 );
 
+router.put(
+    '/update/:id',
+    async (req, res) => {
+      try {
+        console.log(req.body);
+        console.log(req.params.id);
+        const profileId = req.params.id;
+
+        await Profile.updateOne({_id: profileId}, req.body);
+
+        res.json({
+          status: 200,
+          message: 'Профиль создан',
+        });
+      } catch (error) {
+        res
+            .send(500)
+            .json({message: 'Профили не создан'});
+      }
+    },
+);
+
 router.delete(
     '/delete/:id',
     async (req, res) => {
@@ -62,8 +84,6 @@ router.post(
     '/add',
     async (req, res) => {
       try {
-        console.log(req.body);
-
         const newProfile = new Profile(req.body);
 
         await newProfile.save();

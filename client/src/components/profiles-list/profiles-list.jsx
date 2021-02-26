@@ -5,11 +5,11 @@ import ProfileCard from '../profile-card/profile-card';
 import ProfileCardForm from '../profile-card/components/profile-card-form';
 import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
-import {APIRoute} from '../../const';
+import {APIRoute, ProfileFormType} from '../../const';
+import './profiles-list.css';
 
 const ProfilesList = ({isActive, listType}) => {
   const [profiles, setProfiles] = useState([]);
-  const [editingCard, setCardEditing] = useState('');
   const [isProfileDataChanged, setIsProfileDataChanged] = useState(false);
   const [isCardCreating, setIsCardCreating] = useState(false);
 
@@ -30,11 +30,7 @@ const ProfilesList = ({isActive, listType}) => {
   }, [isActive, isProfileDataChanged]);
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-    }}>
+    <div className="profiles-list">
       {
         profiles.map((profile, i) => {
           i += 1;
@@ -43,19 +39,21 @@ const ProfilesList = ({isActive, listType}) => {
               key={`profile-card-${profile._id}`}
               profile={profile}
               index={i}
-              editingCard={editingCard}
-              setCardEditing={setCardEditing}
-              isCardCreating={isCardCreating}
-              setIsCardCreating={setIsCardCreating}
               setIsProfileDataChanged={setIsProfileDataChanged}
+              setIsCardCreating={setIsCardCreating}
+              isCardCreating={isCardCreating}
+              listType={listType}
             />
           );
         })
       }
       {
-        listType === 'MyProfiles' && (isCardCreating && !editingCard ? (
-          <ProfileCardForm setIsCardCreating={setIsCardCreating}
-            setIsProfileDataChanged={setIsProfileDataChanged} />
+        listType === 'MyProfiles' && (isCardCreating ? (
+          <ProfileCardForm
+            setIsProfileDataChanged={setIsProfileDataChanged}
+            setIsCardCreating={setIsCardCreating}
+            type={ProfileFormType.CREATE}
+          />
         ) : (
           <div style={{
             width: '200px',
@@ -72,8 +70,7 @@ const ProfilesList = ({isActive, listType}) => {
               justifyContent: 'center',
             }}
             onClick={() => {
-              setCardEditing('');
-              setIsCardCreating(!isCardCreating);
+              setIsCardCreating(true);
             }}
             size="lg"
             >+</Button>
