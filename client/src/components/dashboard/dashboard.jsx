@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Table} from 'react-bootstrap';
 import {useHttp} from '../../hooks/http.hook';
 import {APIRoute} from '../../const';
 import PropTypes from 'prop-types';
@@ -29,20 +30,27 @@ const Dashboard = ({isActive}) => {
   }, [isActive]);
 
   return dash.length !== 0 && (
-    <div className="dashboard">
-      <ul>
-        <li>Всего пользователей: {dash.usersCount}</li>
-        <li>Всего профилей: {dash.profilesCount}</li>
-        <li>
-          Профилей старше 18 лет: {
+    <Table striped bordered hover variant="dark" style={{textAlign: 'center'}}>
+      <thead>
+        <tr>
+          <th>Total amount of users</th>
+          <th>Total amount of profiles</th>
+          <th>Amount of adult users</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{dash.usersCount}</td>
+          <td>{dash.profilesCount}</td>
+          <td>{
             dash.profiles
                 .map((profile) => new Date(profile.birthdate))
                 .filter((profileDate) => getAge(profileDate) > 18)
                 .length
-          }
-        </li>
-      </ul>
-    </div>
+          }</td>
+        </tr>
+      </tbody>
+    </Table>
   );
 };
 
