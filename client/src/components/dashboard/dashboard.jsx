@@ -3,17 +3,7 @@ import {Table} from 'react-bootstrap';
 import {useHttp} from '../../hooks/http.hook';
 import {APIRoute} from '../../const';
 import PropTypes from 'prop-types';
-
-const getAge = (DOB) => {
-  const today = new Date();
-  const birthDate = new Date(DOB);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
-};
+import {getAge} from '../../utils';
 
 const Dashboard = ({isActive}) => {
   const {request} = useHttp();

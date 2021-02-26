@@ -18,6 +18,7 @@
     "eslint": "^7.20.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.22.0",
+    "jest": "^26.6.0",
     "prop-types": "^15.7.2"
   },
   "scripts": {
