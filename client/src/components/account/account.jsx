@@ -37,14 +37,18 @@ const Account = () => {
               <br/>
               {
                 Object.values(MenuItem).map((menuItem) => {
-                  if (!auth.isUserAdmin && menuItem.id !== MenuItem) {
+                  if (!auth.isUserAdmin &&
+                     menuItem.id !== MenuItem.MY_PROFILES) {
                     return;
                   }
                   return (
                     <Nav.Item key={`${menuItem.id}-menu-item`}>
                       <Nav.Link
                         eventKey={menuItem.id}
-                        onClick={() => setActiveTab(menuItem.id)}
+                        onClick={() => {
+                          setActiveTab(menuItem.id);
+                          console.log(activeTab);
+                        }}
                         disabled={activeTab === menuItem.id}
                       >
                         {menuItem.name}

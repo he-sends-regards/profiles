@@ -22,6 +22,7 @@ router.get(
     async (req, res) => {
       try {
         const userProfiles = await Profile.find({owner: req.params.userEmail});
+        console.log('profiles: ', userProfiles);
 
         res.json(userProfiles);
       } catch (error) {

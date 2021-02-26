@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const {PORT} = require('./const.js');
+const {PORT, mongoUri} = require('./const.js');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use('/api/users', require('./routes/users.routes.js'));
 
 const start = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/', {
+    await mongoose.connect(mongoUri, {
       dbName: 'profiles_testtask',
       useNewUrlParser: true,
       useUnifiedTopology: true,
