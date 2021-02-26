@@ -20,7 +20,7 @@ it('Renders correctly', () => {
           <ProfileCardForm
             profile={profile}
             type={ProfileFormType.CREATE}
-            listType={MenuItem.PROFILES_NETWORK}
+            listType={MenuItem.PROFILES_NETWORK.id}
             setIsProfileDataChanged={noop}
             setIsCardEditing={noop}
             setIsCardCreating={noop}
