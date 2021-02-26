@@ -20,9 +20,7 @@ const Dashboard = ({isActive}) => {
   const [dash, setDash] = useState([]);
 
   const getDash = async () => {
-    setDash(await request(
-        `${APIRoute.GET_USERS}/usersCount`,
-    ));
+    setDash(await request(APIRoute.DASHBOARD));
   };
 
   useEffect(() => {

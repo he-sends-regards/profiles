@@ -7,6 +7,7 @@ export const AppRoute = {
 export const APIRoute = {
   AUTH: '/api/auth',
   GET_USERS: '/api/users',
+  DASHBOARD: '/api/users/dashboard',
   DELETE_USER: '/api/users/delete',
   GET_PROFILES: '/api/profiles/',
 };

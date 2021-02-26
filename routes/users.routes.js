@@ -48,7 +48,7 @@ router.delete(
 );
 
 router.get(
-    '/usersCount',
+    '/dashboard',
     async (req, res) => {
       try {
         const usersCount = (await User.find()).length;
