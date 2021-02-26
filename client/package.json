@@ -18,7 +18,8 @@
     "eslint": "^7.20.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.22.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-test-renderer": "^17.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
