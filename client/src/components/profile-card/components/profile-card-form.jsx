@@ -146,7 +146,7 @@ const ProfileCardForm = ({
 
 ProfileCardForm.propTypes = {
   setIsCardCreating: PropTypes.func.isRequired,
-  setIsCardEditing: PropTypes.func.isRequired,
+  setIsCardEditing: PropTypes.func,
   setIsProfileDataChanged: PropTypes.func.isRequired,
   type: PropTypes.oneOf([
     ProfileFormType.CREATE, ProfileFormType.EDIT,
