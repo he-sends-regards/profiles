@@ -1,7 +1,6 @@
 const {
   Schema,
   model,
-  Types,
 } = require('mongoose');
 
 const schema = new Schema({
@@ -22,10 +21,6 @@ const schema = new Schema({
     type: Boolean,
     required: true,
   },
-  profiles: [{
-    type: Types.ObjectId,
-    ref: 'Profile',
-  }],
 }, {
   collection: 'users',
 });
