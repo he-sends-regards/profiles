@@ -106,7 +106,7 @@ const Account = () => {
                       </Tab.Pane>
                       <Tab.Pane eventKey="Dashboard">
                         <Dashboard
-                          isActive={activeTab === 'ProfilesNetwork'}
+                          isActive={activeTab === 'Dashboard'}
                         />
                       </Tab.Pane>
                     </>

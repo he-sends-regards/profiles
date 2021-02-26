@@ -31,6 +31,8 @@ router.delete(
         }
 
         const userEmail = req.params.email;
+
+        await Profile.deleteMany({owner: `${userEmail}`});
         await User.deleteOne({email: userEmail});
 
         res.json({
