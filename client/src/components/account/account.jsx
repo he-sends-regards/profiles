@@ -75,20 +75,20 @@ const Account = () => {
                 auth.isUserAdmin &&
                   (
                     <>
-                      <Tab.Pane eventKey="ProfilesNetwork">
+                      <Tab.Pane eventKey={MenuItem.PROFILES_NETWORK}>
                         <ProfilesList
-                          isActive={activeTab === 'ProfilesNetwork'}
-                          listType={'ProfilesNetwork'}
+                          isActive={activeTab === MenuItem.PROFILES_NETWORK}
+                          listType={MenuItem.PROFILES_NETWORK}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey="UsersNetwork">
+                      <Tab.Pane eventKey={MenuItem.USERS_NETWORK}>
                         <UsersList
-                          isActive={activeTab === 'UsersNetwork'}
+                          isActive={activeTab === MenuItem.USERS_NETWORK}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey="Dashboard">
+                      <Tab.Pane eventKey={MenuItem.DASHBOARD}>
                         <Dashboard
-                          isActive={activeTab === 'Dashboard'}
+                          isActive={activeTab === MenuItem.DASHBOARD}
                         />
                       </Tab.Pane>
                     </>
