@@ -60,7 +60,7 @@ const ProfilesList = ({isActive, listType}) => {
         })
       }
       {
-        listType === 'MyProfiles' && (isCardCreating ? (
+        listType === 'MyProfiles' && (isCardCreating && !editingCard ? (
           <ProfileCardEdit setIsCardCreating={setIsCardCreating}
             setIsProfileCreated={setIsProfileCreated} />
         ) : (
@@ -78,7 +78,10 @@ const ProfilesList = ({isActive, listType}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onClick={() => setIsCardCreating(!isCardCreating)}
+            onClick={() => {
+              setCardEditing('');
+              setIsCardCreating(!isCardCreating);
+            }}
             size="lg"
             >+</Button>
           </div>
