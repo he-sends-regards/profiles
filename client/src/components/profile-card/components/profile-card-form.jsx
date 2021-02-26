@@ -2,7 +2,7 @@ import React, {useContext, createRef} from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
 import cancelSvg from './img/cancel.svg';
-import {APIRoute, HTTPStatus, ProfileFormType} from '../../../const';
+import {APIRoute, HTTPStatus, MenuItem, ProfileFormType} from '../../../const';
 import {AuthContext} from '../../../context/AuthContext';
 import {useHttp} from '../../../hooks/http.hook';
 import './profile-card-form.css';
@@ -150,7 +150,9 @@ ProfileCardForm.propTypes = {
   setIsProfileDataChanged: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['edit', 'create']).isRequired,
   profile: PropTypes.object,
-  listType: PropTypes.oneOf(['MyProfiles', 'ProfilesNetwork']),
+  listType: PropTypes.oneOf(
+      [MenuItem.MY_PROFILES, MenuItem.PROFILES_NETWORK],
+  ),
 };
 
 export default ProfileCardForm;
