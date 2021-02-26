@@ -6,7 +6,6 @@ import {APIRoute} from '../../const';
 
 const UsersList = ({isActive}) => {
   const [users, setUsers] = useState([]);
-  const [editingCard, setCardEditing] = useState(-1);
   const [isUserDataChanged, setIsUserDataChanged] = useState(false);
   const {request} = useHttp();
 
@@ -38,8 +37,6 @@ const UsersList = ({isActive}) => {
             <UserCard
               key={`user-card-${user._id}`}
               user={user}
-              editingCard={editingCard}
-              setCardEditing={setCardEditing}
               setIsUserDataChanged={setIsUserDataChanged}
             />
           );

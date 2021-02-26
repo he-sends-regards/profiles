@@ -6,19 +6,12 @@ import {useHttp} from '../../hooks/http.hook';
 import {APIRoute, HTTPStatus} from '../../const';
 import './user-сard.css';
 
-const UserCard = (
-    {user, editingCard, setCardEditing, setIsUserDataChanged},
-) => {
+const UserCard = ({user, setIsUserDataChanged}) => {
   const {request} = useHttp();
   const {userMail, logout, isUserAdmin} = useContext(AuthContext);
 
   return (
-    <Card className="user-card"
-      style={{
-        width: editingCard === user._id ? '420px' : '250px',
-        height: editingCard === user._id ? '420px' : '250px',
-      }}
-    >
+    <Card className="user-card">
       <Card.Body className="user-card_body">
         <Card.Title>{user.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
@@ -45,32 +38,16 @@ const UserCard = (
                 }
               }}
               >
-                update to admin &uarr;
+                Upgrade to admin &uarr;
               </Card.Link>
             )
           }
         </Card.Text>
         <div>
-          {
-            editingCard === user._id ?
-              (
-                <Card.Link style={{cursor: 'pointer'}} onClick={() => {
-                  setCardEditing(-1);
-                }}>
-                  X
-                </Card.Link>
-              ) :
-              (
-                <Card.Link style={{cursor: 'pointer'}} onClick={() => {
-                  setCardEditing(user._id);
-                }}>
-                  Edit
-                </Card.Link>
-              )
-          }
           <Card.Link
             style={{
               cursor: 'pointer',
+              color: 'red',
             }}
             onClick={async () => {
               const data = await request(
@@ -101,8 +78,6 @@ UserCard.propTypes = {
     password: PropTypes.string.isRequired,
     isAdmin: PropTypes.bool.isRequired,
   }).isRequired,
-  editingCard: PropTypes.number.isRequired,
-  setCardEditing: PropTypes.func.isRequired,
   setIsUserDataChanged: PropTypes.func.isRequired,
 };
 
