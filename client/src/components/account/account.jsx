@@ -4,28 +4,10 @@ import {AuthContext} from '../../context/AuthContext';
 import Dashboard from '../dashboard/dashboard';
 import ProfilesList from '../profiles-list/profiles-list';
 import UsersList from '../users-list/users-list';
+import {MenuItem} from '../../const';
 import './account.css';
 import accSvg from './img/account-logo.svg';
 import kingSvg from './img/king-logo.svg';
-
-const MenuItems = [
-  {
-    id: 'MyProfiles',
-    name: 'My profiles',
-  },
-  {
-    id: 'ProfilesNetwork',
-    name: 'Profiles network',
-  },
-  {
-    id: 'UsersNetwork',
-    name: 'Users network',
-  },
-  {
-    id: 'Dashboard',
-    name: 'Dashboard',
-  },
-];
 
 const Account = () => {
   const auth = useContext(AuthContext);
@@ -54,8 +36,8 @@ const Account = () => {
 
               <br/>
               {
-                MenuItems.map((menuItem) => {
-                  if (!auth.isUserAdmin && menuItem.id !== 'MyProfiles') {
+                Object.values(MenuItem).map((menuItem) => {
+                  if (!auth.isUserAdmin && menuItem.id !== MenuItem) {
                     return;
                   }
                   return (
@@ -83,10 +65,10 @@ const Account = () => {
 
           <Col sm={10}>
             <Tab.Content>
-              <Tab.Pane eventKey="MyProfiles">
+              <Tab.Pane eventKey={MenuItem.MY_PROFILES}>
                 <ProfilesList
-                  isActive={activeTab === 'MyProfiles'}
-                  listType={'MyProfiles'}
+                  isActive={activeTab === MenuItem.MY_PROFILES}
+                  listType={MenuItem.MY_PROFILES}
                 />
               </Tab.Pane>
               {

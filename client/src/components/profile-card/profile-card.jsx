@@ -4,7 +4,7 @@ import {Card} from 'react-bootstrap';
 import ProfileCardForm from './components/profile-card-form';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
-import {HTTPStatus, ProfileFormType} from '../../const';
+import {HTTPStatus, MenuItem, ProfileFormType} from '../../const';
 import './profile-card.css';
 
 const ProfileCard = ({
@@ -85,7 +85,9 @@ ProfileCard.propTypes = {
   setIsCardEditing: PropTypes.func,
   setIsCardCreating: PropTypes.func.isRequired,
   isCardEditing: PropTypes.bool,
-  listType: PropTypes.oneOf(['MyProfiles', 'ProfilesNetwork']).isRequired,
+  listType: PropTypes.oneOf(
+      [MenuItem.MY_PROFILES, MenuItem.PROFILES_NETWORK],
+  ).isRequired,
 };
 
 export default ProfileCard;

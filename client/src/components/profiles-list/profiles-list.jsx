@@ -5,7 +5,7 @@ import ProfileCard from '../profile-card/profile-card';
 import ProfileCardForm from '../profile-card/components/profile-card-form';
 import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
-import {APIRoute, ProfileFormType} from '../../const';
+import {APIRoute, MenuItem, ProfileFormType} from '../../const';
 import './profiles-list.css';
 
 const ProfilesList = ({isActive, listType}) => {
@@ -48,7 +48,7 @@ const ProfilesList = ({isActive, listType}) => {
         })
       }
       {
-        listType === 'MyProfiles' && (isCardCreating ? (
+        listType === MenuItem.MY_PROFILES && (isCardCreating ? (
           <ProfileCardForm
             setIsProfileDataChanged={setIsProfileDataChanged}
             setIsCardCreating={setIsCardCreating}
@@ -84,7 +84,9 @@ const ProfilesList = ({isActive, listType}) => {
 
 ProfilesList.propTypes = {
   isActive: PropTypes.bool.isRequired,
-  listType: PropTypes.oneOf(['MyProfiles', 'ProfilesNetwork']).isRequired,
+  listType: PropTypes.oneOf(
+      [MenuItem.MY_PROFILES, MenuItem.PROFILES_NETWORK],
+  ).isRequired,
 };
 
 export default ProfilesList;
