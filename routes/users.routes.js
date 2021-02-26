@@ -34,6 +34,7 @@ router.delete(
         await User.deleteOne({email: userEmail});
 
         res.json({
+          status: 200,
           message: 'Пользователь удалён',
         });
       } catch (error) {

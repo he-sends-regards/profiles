@@ -7,8 +7,7 @@ import {APIRoute, HTTPStatus} from '../../const';
 import './user-сard.css';
 
 const UserCard = ({user,
-  editingCard, setCardEditing, isUserDeleted, setIsUserDeleted,
-  setIsUserUpdated},
+  editingCard, setCardEditing, setIsUserDeleted, setIsUserUpdated},
 ) => {
   const {request} = useHttp();
   const {userMail, logout, isUserAdmin} = useContext(AuthContext);
@@ -79,11 +78,11 @@ const UserCard = ({user,
                   'DELETE',
                   {isUserAdmin},
               );
-              if (data.status === HTTPStatus) {
+              if (data.status === HTTPStatus.OK) {
                 if (user.email === userMail) {
                   logout();
                 } else {
-                  setIsUserDeleted(!isUserDeleted);
+                  setIsUserDeleted(true);
                 }
               };
             }}
@@ -104,7 +103,6 @@ UserCard.propTypes = {
   }).isRequired,
   editingCard: PropTypes.number.isRequired,
   setCardEditing: PropTypes.func.isRequired,
-  isUserDeleted: PropTypes.bool.isRequired,
   setIsUserDeleted: PropTypes.func.isRequired,
   setIsUserUpdated: PropTypes.func.isRequired,
 };

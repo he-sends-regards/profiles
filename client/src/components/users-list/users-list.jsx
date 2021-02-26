@@ -27,7 +27,6 @@ const UsersList = ({isActive}) => {
     if (isUserUpdated) {
       setIsUserUpdated(false);
     }
-    setIsUserDeleted(false);
   }, [isActive, isUserDeleted, isUserUpdated]);
 
   return (
