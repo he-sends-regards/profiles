@@ -32,7 +32,7 @@ const UserCard = ({user, setIsUserDataChanged}) => {
                     `api/users/updateToAdmin/${user.email}`,
                     'PUT',
                 );
-                console.log(data);
+
                 if (data.status === HTTPStatus.OK) {
                   setIsUserDataChanged(true);
                 }

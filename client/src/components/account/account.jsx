@@ -47,7 +47,6 @@ const Account = () => {
                         eventKey={menuItem.id}
                         onClick={() => {
                           setActiveTab(menuItem.id);
-                          console.log(activeTab);
                         }}
                         disabled={activeTab === menuItem.id}
                       >

@@ -25,7 +25,6 @@ const ProfilesList = ({isActive, listType}) => {
   };
 
   useEffect(() => {
-    console.log(isActive);
     isActive && getProfiles();
     isProfileDataChanged && setIsProfileDataChanged(false);
   }, [isActive, isProfileDataChanged]);
