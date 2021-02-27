@@ -37,9 +37,10 @@ const Account = () => {
               <br/>
               {
                 Object.values(MenuItem).map((menuItem) => {
-                  if (!auth.isUserAdmin && menuItem.id !== MenuItem) {
-                    return;
-                  }
+                  if (!auth.isUserAdmin &&
+                    menuItem.id !== MenuItem.MY_PROFILES.id
+                  ) return;
+
                   return (
                     <Nav.Item key={`${menuItem.id}-menu-item`}>
                       <Nav.Link
