@@ -38,7 +38,9 @@ const App = () => {
           </Route>
           <Route path={AppRoute.ACCOUNT} exact>
             {
-              isAuthenticated ? <Account /> : <Redirect to="/auth" />
+              isAuthenticated ?
+                <Account userData={{userName, isUserAdmin}} /> :
+                <Redirect to="/auth" />
             }
           </Route>
           <Route path={AppRoute.ROOT} exact>

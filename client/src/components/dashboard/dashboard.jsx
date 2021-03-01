@@ -5,7 +5,7 @@ import {APIRoute} from '../../const';
 import PropTypes from 'prop-types';
 import {getAge} from '../../utils';
 
-const Dashboard = ({isActive}) => {
+const Dashboard = ({isActive = false}) => {
   const {request} = useHttp();
   const [dash, setDash] = useState([]);
 
@@ -43,7 +43,7 @@ const Dashboard = ({isActive}) => {
 };
 
 Dashboard.propTypes = {
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
 };
 
 export default Dashboard;

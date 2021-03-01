@@ -1,17 +1,24 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Enzyme, {mount, shallow} from 'enzyme';
 import Dashboard from './dashboard.jsx';
 
-it('Renders correctly without isActive prop', () => {
-  const tree = renderer
-      .create(<Dashboard isActive={false} />)
-      .toJSON();
-  expect(tree).toMatchSnapshot();
+Enzyme.configure({adapter: new Adapter()});
+
+const setUp = (props) => shallow(<Dashboard {...props} />);
+
+it('Renders correctly with default isActive prop', () => {
+  const setDash = jest.fn();
+  const handleClick = jest.spyOn(React, 'useState');
+  handleClick.mockImplementation((dash) => [dash, setDash]);
+
+  const DashboardComponent = setUp({
+    isActive: true,
+  });
+  const MenuFirstItem = MenuComponent.find('.nav-link').first();
+
+  MenuFirstItem.simulate('click');
+
+  expect(setActiveTab).toBeTruthy();
 });
 
-it('Renders correctly with isActive prop', () => {
-  const tree = renderer
-      .create(<Dashboard isActive={true} />)
-      .toJSON();
-  expect(tree).toMatchSnapshot();
-});
