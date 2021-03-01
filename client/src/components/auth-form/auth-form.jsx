@@ -26,9 +26,14 @@ const AuthForm = () => {
 
   const [authType, setAuthType] = useState('');
   const {request} = useHttp();
-  const {register, handleSubmit} = useForm();
+  const {register, handleSubmit, errors} = useForm();
 
   const onSubmit = async (authData) => {
+    if (Object.keys.length === 0) {
+      console.log(errors);
+      return;
+    }
+
     const responseData = await request(
         `${APIRoute.AUTH}/${authType}`,
         'POST',
@@ -84,10 +89,20 @@ const AuthForm = () => {
                     id="name-field"
                     name="name"
                     ref={register({
-                      require: true,
+                      required: true,
                       minLength: FieldsLengthParams.name.min,
                     })}
                   />
+                  {
+                    errors.name &&
+                    errors.name.type === 'required' &&
+                      <span role="alert">This is required</span>
+                  }
+                  {
+                    errors.name &&
+                    errors.name.type === 'minLength' &&
+                      <span role="alert">Min length exceeded</span>
+                  }
                   <br />
                 </>
               )
@@ -101,6 +116,11 @@ const AuthForm = () => {
               name="email"
               ref={register({required: true})}
             />
+            {
+              errors.email &&
+              errors.email.type === 'required' &&
+                <span role="alert">This is required</span>
+            }
             <br />
 
             <label htmlFor="password-field">Password:</label>
@@ -115,6 +135,21 @@ const AuthForm = () => {
                 maxLength: FieldsLengthParams.password.max,
               })}
             />
+            {
+              errors.password &&
+              errors.password.type === 'required' &&
+                <span role="alert">This is required</span>
+            }
+            {
+              errors.password &&
+              errors.password.type === 'minLength' &&
+                <span role="alert">Min length exceeded</span>
+            }
+            {
+              errors.password &&
+              errors.password.type === 'maxLength' &&
+                <span role="alert">Max length exceeded</span>
+            }
             <br />
             {
               authType === AuthorizationType.REGISTER && (
