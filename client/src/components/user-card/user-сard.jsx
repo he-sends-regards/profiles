@@ -23,20 +23,17 @@ const UserCard = ({user, setIsUserDataChanged}) => {
           </span>
           {
             !user.isAdmin && (
-              <Card.Link style={{
-                cursor: 'pointer',
-                color: 'green',
-              }}
-              onClick={async () => {
-                const data = await request(
-                    `api/users/updateToAdmin/${user.email}`,
-                    'PUT',
-                );
-                console.log(data);
-                if (data.status === HTTPStatus.OK) {
-                  setIsUserDataChanged(true);
-                }
-              }}
+              <Card.Link className="user-card__link_upgrade"
+                onClick={async () => {
+                  const data = await request(
+                      `api/users/updateToAdmin/${user.email}`,
+                      'PUT',
+                  );
+                  console.log(data);
+                  if (data.status === HTTPStatus.OK) {
+                    setIsUserDataChanged(true);
+                  }
+                }}
               >
                 Upgrade to admin &uarr;
               </Card.Link>
@@ -44,11 +41,7 @@ const UserCard = ({user, setIsUserDataChanged}) => {
           }
         </Card.Text>
         <div>
-          <Card.Link
-            style={{
-              cursor: 'pointer',
-              color: 'red',
-            }}
+          <Card.Link className="user-card__link_delete"
             onClick={async () => {
               const data = await request(
                   `${APIRoute.DELETE_USER}/${user.email}`,

@@ -18,17 +18,29 @@ exports[`renders correctly 1`] = `
         <h3>
           <img
             alt="Account logo"
-            src="account-logo.svg"
-            style={
-              Object {
-                "filter": "invert()",
-              }
-            }
+            src="account-logo.png"
             width="40px"
           />
           <br />
         </h3>
         <br />
+        <div
+          className="nav-item"
+        >
+          <a
+            aria-controls="left-tabs-example-tabpane-MyProfiles"
+            aria-selected={false}
+            className="nav-link"
+            data-rb-event-key="MyProfiles"
+            href="#"
+            id="left-tabs-example-tab-MyProfiles"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="tab"
+          >
+            My profiles
+          </a>
+        </div>
         <br />
         <button
           className="account__logout-btn btn btn-outline-danger"
@@ -57,29 +69,12 @@ exports[`renders correctly 1`] = `
             className="profiles-list"
           >
             <div
-              style={
-                Object {
-                  "alignItems": "center",
-                  "display": "flex",
-                  "height": "200px",
-                  "justifyContent": "center",
-                  "width": "200px",
-                }
-              }
+              classТame="profiles-list__card"
             >
               <button
-                className="btn btn-primary btn-lg"
+                className="profiles-card__btn btn btn-primary btn-lg"
                 disabled={false}
                 onClick={[Function]}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "display": "flex",
-                    "height": "30%",
-                    "justifyContent": "center",
-                    "width": "30%",
-                  }
-                }
                 type="button"
               >
                 +

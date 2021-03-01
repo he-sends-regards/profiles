@@ -55,24 +55,12 @@ const ProfilesList = ({isActive, listType}) => {
             type={ProfileFormType.CREATE}
           />
         ) : (
-          <div style={{
-            width: '200px',
-            height: '200px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <Button style={{
-              width: '30%',
-              height: '30%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onClick={() => {
-              setIsCardCreating(true);
-            }}
-            size="lg"
+          <div classТame="profiles-list__card">
+            <Button className="profiles-card__btn"
+              onClick={() => {
+                setIsCardCreating(true);
+              }}
+              size="lg"
             >+</Button>
           </div>
         )

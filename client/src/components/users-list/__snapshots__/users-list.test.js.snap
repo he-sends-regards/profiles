@@ -1,37 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders correctly 1`] = `
-<div
-  style={
-    Object {
-      "display": "flex",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-    }
-  }
-/>
-`;
-
 exports[`Renders correctly when is active 1`] = `
 <div
-  style={
-    Object {
-      "display": "flex",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-    }
-  }
+  className="users-list"
 />
 `;
 
 exports[`Renders correctly when is not active 1`] = `
 <div
-  style={
-    Object {
-      "display": "flex",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-    }
-  }
+  className="users-list"
 />
 `;

@@ -18,7 +18,7 @@ const Dashboard = ({isActive}) => {
   }, [isActive]);
 
   return dash.length !== 0 && (
-    <Table striped bordered hover variant="dark" style={{textAlign: 'center'}}>
+    <Table striped bordered hover variant="dark">
       <thead>
         <tr>
           <th>Total amount of users</th>

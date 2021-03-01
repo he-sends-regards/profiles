@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useHttp} from '../../hooks/http.hook';
 import UserCard from '../user-card/user-сard';
 import {APIRoute} from '../../const';
+import './users-list.css';
 
 const UsersList = ({isActive}) => {
   const [users, setUsers] = useState([]);
@@ -25,11 +26,7 @@ const UsersList = ({isActive}) => {
   }, [isActive, isUserDataChanged]);
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-    }}>
+    <div className="users-list">
       {
         users.map((user, i) => {
           i += 1;

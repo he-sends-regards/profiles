@@ -43,7 +43,7 @@ const ProfileCard = ({
         </Card.Text>
 
         <Card.Link
-          style={{cursor: 'pointer'}}
+          className="profile-card__link"
           onClick={() => {
             setIsCardCreating(false);
             setIsCardEditing(true);
@@ -53,9 +53,7 @@ const ProfileCard = ({
         </Card.Link>
 
         <Card.Link
-          style={{
-            cursor: 'pointer',
-          }}
+          className="profile-card__link"
           onClick={async () => {
             const data = await request(
                 `/api/profiles/delete/${profile._id}`,

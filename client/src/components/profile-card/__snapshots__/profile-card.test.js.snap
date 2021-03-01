@@ -35,24 +35,14 @@ exports[`Renders correctly 1`] = `
       </span>
     </p>
     <a
-      className="card-link"
+      className="profile-card__link card-link"
       onClick={[Function]}
-      style={
-        Object {
-          "cursor": "pointer",
-        }
-      }
     >
       Edit
     </a>
     <a
-      className="card-link"
+      className="profile-card__link card-link"
       onClick={[Function]}
-      style={
-        Object {
-          "cursor": "pointer",
-        }
-      }
     >
       Delete
     </a>

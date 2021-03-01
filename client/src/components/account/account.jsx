@@ -6,8 +6,8 @@ import ProfilesList from '../profiles-list/profiles-list';
 import UsersList from '../users-list/users-list';
 import {MenuItem} from '../../const';
 import './account.css';
-import accSvg from './img/account-logo.svg';
-import kingSvg from './img/king-logo.svg';
+import accLogo from './img/account-logo.png';
+import kingLogo from './img/king-logo.svg';
 
 const Account = () => {
   const auth = useContext(AuthContext);
@@ -23,12 +23,11 @@ const Account = () => {
                 <img
                   src={
                     auth.isUserAdmin ?
-                      kingSvg :
-                      accSvg
+                      kingLogo :
+                      accLogo
                   }
                   alt="Account logo"
                   width="40px"
-                  style={{filter: !auth.isUserAdmin && 'invert()'}}
                 />
                 <br/>
                 {auth.userName}

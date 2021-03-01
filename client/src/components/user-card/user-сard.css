@@ -16,3 +16,13 @@
   align-items: flex-start;
   justify-content: center;
 }
+
+.user-card__link_upgrade {
+  cursor: pointer;
+  color: green;
+}
+
+.user-card__link_delete {
+  cursor: pointer;
+  color: red;
+}
