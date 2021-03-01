@@ -1,7 +1,8 @@
-import React, {useState, createRef, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
 import {ButtonGroup, Button} from 'react-bootstrap';
+import {useForm} from 'react-hook-form';
 import {APIRoute} from '../../const';
 import './auth-form.css';
 
@@ -10,31 +11,25 @@ const AuthorizationType = {
   REGISTER: 'register',
 };
 
+const FieldsLengthParams = {
+  name: {
+    min: 2,
+  },
+  password: {
+    min: 6,
+    max: 24,
+  },
+};
+
 const AuthForm = () => {
   const auth = useContext(AuthContext);
 
   const [authType, setAuthType] = useState('');
   const {request} = useHttp();
+  const {register, handleSubmit} = useForm();
 
-  const nameRef = createRef();
-  const emailRef = createRef();
-  const passwordRef = createRef();
-  const isAdminCheckboxRef = createRef();
-
-  const handleSumbit = async (evt) => {
-    evt.preventDefault();
-
-    const authData = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    };
-
-    if (authType === AuthorizationType.REGISTER) {
-      authData.name = nameRef.current.value;
-      authData.isAdmin = isAdminCheckboxRef.current.checked;
-    }
-
-    const data = await request(
+  const onSubmit = async (authData) => {
+    const responseData = await request(
         `${APIRoute.AUTH}/${authType}`,
         'POST',
         authData,
@@ -42,15 +37,16 @@ const AuthForm = () => {
 
     if (authType === AuthorizationType.LOGIN) {
       auth.login(
-          data.token,
-          data.userId,
-          data.userName,
-          data.userMail,
-          data.isUserAdmin,
+          responseData.token,
+          responseData.userId,
+          responseData.userName,
+          responseData.userMail,
+          responseData.isUserAdmin,
       );
     }
 
-    if (authType === AuthorizationType.REGISTER && data.status !== 400) {
+    if (authType === AuthorizationType.REGISTER &&
+      responseData.status !== 400) {
       alert('You have been registered!');
       setAuthType(AuthorizationType.LOGIN);
     }
@@ -77,18 +73,20 @@ const AuthForm = () => {
 
       {
         authType && (
-          <form onSubmit={handleSumbit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             {
               authType === AuthorizationType.REGISTER && (
                 <>
                   <label htmlFor="name-field">Name:</label>
                   <br />
                   <input
-                    minLength="2"
                     type="name"
                     id="name-field"
-                    ref={nameRef}
-                    required
+                    name="name"
+                    ref={register({
+                      require: true,
+                      minLength: FieldsLengthParams.name.min,
+                    })}
                   />
                   <br />
                 </>
@@ -97,18 +95,25 @@ const AuthForm = () => {
 
             <label htmlFor="email-field">Email:</label>
             <br />
-            <input type="email" id="email-field" ref={emailRef} required/>
+            <input
+              type="email"
+              id="email-field"
+              name="email"
+              ref={register({required: true})}
+            />
             <br />
 
             <label htmlFor="password-field">Password:</label>
             <br />
             <input
               type="password"
+              name="password"
               id="password-field"
-              ref={passwordRef}
-              minLength="6"
-              maxLength="24"
-              required
+              ref={register({
+                required: true,
+                minLength: FieldsLengthParams.password.min,
+                maxLength: FieldsLengthParams.password.max,
+              })}
             />
             <br />
             {
@@ -118,14 +123,14 @@ const AuthForm = () => {
                     htmlFor="isAdmin"
                     className="auth-form__isAdmin-label"
                   >
-              Are you an admin?
+                    Are you an admin?
                   </label>
                   <input
                     type="checkbox"
-                    name=""
                     id="isAdmin"
+                    name="isAdmin"
                     className="auth-form__isAdmin-checkbox"
-                    ref={isAdminCheckboxRef}
+                    ref={register}
                   />
                   <br />
                 </>
