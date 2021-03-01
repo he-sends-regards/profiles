@@ -5,13 +5,16 @@ import Dashboard from '../dashboard/dashboard';
 import ProfilesList from '../profiles-list/profiles-list';
 import UsersList from '../users-list/users-list';
 import {MenuItem} from '../../const';
-import './account.css';
 import accLogo from './img/account-logo.png';
 import kingLogo from './img/king-logo.svg';
+import './account.css';
 
 const Account = () => {
   const auth = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState('');
+
+  const onTabClick = (tabName) => setActiveTab(tabName);
+  const onLogout = () => auth.logout();
 
   return (
     <div className="account">
@@ -44,7 +47,7 @@ const Account = () => {
                     <Nav.Item key={`${menuItem.id}-menu-item`}>
                       <Nav.Link
                         eventKey={menuItem.id}
-                        onClick={() => setActiveTab(menuItem.id)}
+                        onClick={onTabClick}
                         disabled={activeTab === menuItem.id}
                       >
                         {menuItem.name}
@@ -57,7 +60,7 @@ const Account = () => {
 
               <Button variant="outline-danger"
                 className="account__logout-btn"
-                onClick={() => auth.logout()}>
+                onClick={onLogout}>
                 Logout
               </Button>
             </Nav>

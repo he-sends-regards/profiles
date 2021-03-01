@@ -40,20 +40,22 @@ const ProfileCardForm = ({
     }
   };
 
+  const onFormClose = () => {
+    if (type === ProfileFormType.CREATE) {
+      setIsCardCreating(false);
+    } else if (type === ProfileFormType.EDIT) {
+      setIsCardEditing(false);
+    } else {
+      console.error(`Unknown type in form: ${type}`);
+    }
+  };
+
   return (
     <form className="user-card-edit" onSubmit={handleSubmit(onSumbit)}>
       <div className="user-card-edit__close-container">
         <button
           className="user-card-edit__close_btn"
-          onClick={() => {
-            if (type === ProfileFormType.CREATE) {
-              setIsCardCreating(false);
-            } else if (type === ProfileFormType.EDIT) {
-              setIsCardEditing(false);
-            } else {
-              console.error(`Unknown type in form: ${type}`);
-            }
-          }}>
+          onClick={onFormClose}>
           <img
             src={cancelSvg}
             className="user-card-edit__close-img"

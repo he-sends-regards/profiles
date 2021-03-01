@@ -16,6 +16,8 @@ const ProfilesList = ({isActive, listType}) => {
   const {userMail} = useContext(AuthContext);
   const {request} = useHttp();
 
+  const onAddProfileClick = () => setIsCardCreating(true);
+
   const getProfiles = async () => {
     setProfiles(await request(
       listType === MenuItem.PROFILES_NETWORK.id ?
@@ -55,11 +57,9 @@ const ProfilesList = ({isActive, listType}) => {
             type={ProfileFormType.CREATE}
           />
         ) : (
-          <div classТame="profiles-list__card">
+          <div className="profiles-list__card">
             <Button className="profiles-card__btn"
-              onClick={() => {
-                setIsCardCreating(true);
-              }}
+              onClick={onAddProfileClick}
               size="lg"
             >+</Button>
           </div>

@@ -57,19 +57,21 @@ const AuthForm = () => {
     }
   };
 
+  const onFormTypeBtnClick = (formType) => setAuthType(formType);
+
   return (
     <div className="auth-form">
       <ButtonGroup aria-label="Basic example"
         className="auth-form__auth-buttons"
       >
         <Button variant="primary"
-          onClick={() => setAuthType(AuthorizationType.LOGIN)}
+          onClick={onFormTypeBtnClick(AuthorizationType.LOGIN)}
           disabled={authType === AuthorizationType.LOGIN}
         >
           Login
         </Button>
         <Button variant="primary"
-          onClick={() => setAuthType(AuthorizationType.REGISTER)}
+          onClick={onFormTypeBtnClick(AuthorizationType.REGISTER)}
           disabled={authType === AuthorizationType.REGISTER}
         >
           Register

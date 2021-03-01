@@ -18,6 +18,22 @@ const ProfileCard = ({
   const {isUserAdmin} = useContext(AuthContext);
   const [isCardEditing, setIsCardEditing] = useState(false);
 
+  const onEditClick = () => {
+    setIsCardCreating(false);
+    setIsCardEditing(true);
+  };
+
+  const onDeleteClick = async () => {
+    const data = await request(
+        `/api/profiles/delete/${profile._id}`,
+        'DELETE',
+        {isUserAdmin},
+    );
+    if (data.status === HTTPStatus.OK) {
+      setIsProfileDataChanged(true);
+    }
+  };
+
   return isCardEditing ? (
     <ProfileCardForm
       profile={profile}
@@ -44,26 +60,14 @@ const ProfileCard = ({
 
         <Card.Link
           className="profile-card__link"
-          onClick={() => {
-            setIsCardCreating(false);
-            setIsCardEditing(true);
-          }}
+          onClick={onEditClick}
         >
           Edit
         </Card.Link>
 
         <Card.Link
           className="profile-card__link"
-          onClick={async () => {
-            const data = await request(
-                `/api/profiles/delete/${profile._id}`,
-                'DELETE',
-                {isUserAdmin},
-            );
-            if (data.status === HTTPStatus.OK) {
-              setIsProfileDataChanged(true);
-            }
-          }}
+          onClick={onDeleteClick}
         >Delete</Card.Link>
       </Card.Body>
     </Card>
