@@ -1,17 +1,32 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import {screen, render} from '@testing-library/react';
+
 import Dashboard from './dashboard.jsx';
 
-it('Renders correctly without isActive prop', () => {
-  const tree = renderer
-      .create(<Dashboard isActive={false} />)
-      .toJSON();
-  expect(tree).toMatchSnapshot();
-});
+const setUp = (props) => render(<Dashboard {...props} />);
 
-it('Renders correctly with isActive prop', () => {
-  const tree = renderer
-      .create(<Dashboard isActive={true} />)
-      .toJSON();
-  expect(tree).toMatchSnapshot();
+const mockDashData = {
+  usersCount: 10,
+  profilesCount: 20,
+  profiles: [
+    {
+      birthdate: '2020-01-01',
+    },
+    {
+      birthdate: '2000-01-01',
+    },
+    {
+      birthdate: '2002-03-04',
+    },
+  ],
+};
+
+describe('Dashboard tests', () => {
+  it('Should render correctly', () => {
+    setUp({
+      isActive: true,
+      dashData: mockDashData,
+    });
+    expect(screen.getByTestId('dashboard')).toBeTruthy();
+  });
 });

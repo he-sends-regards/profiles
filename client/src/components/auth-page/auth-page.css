@@ -1,0 +1,13 @@
+.auth-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.auth-form__auth-buttons button {
+  margin: 0 10px;
+  font-size: 2rem;
+}

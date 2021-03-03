@@ -37,7 +37,7 @@ const UserCard = ({user, setIsUserDataChanged}) => {
   };
 
   return (
-    <Card className="user-card">
+    <Card className="user-card" data-testid="user-card">
       <Card.Body className="user-card_body">
         <Card.Title>{user.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">

@@ -1,36 +1,21 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
 import ProfileCard from '../profile-card/profile-card';
-import ProfileCardForm from '../profile-card/components/profile-card-form';
-import {AuthContext} from '../../context/AuthContext';
-import {useHttp} from '../../hooks/http.hook';
-import {APIRoute, MenuItem, ProfileFormType} from '../../const';
+import ProfileCardEdit from '../profile-card/components/profile-card-edit';
+import {MenuItem, ProfileFormType} from '../../const';
 import './profiles-list.css';
 
-const ProfilesList = ({isActive, listType}) => {
-  const [profiles, setProfiles] = useState([]);
-  const [isProfileDataChanged, setIsProfileDataChanged] = useState(false);
-  const [isCardCreating, setIsCardCreating] = useState(false);
-
-  const {userMail} = useContext(AuthContext);
-  const {request} = useHttp();
-
-  const onAddProfileClick = () => setIsCardCreating(true);
-
-  const getProfiles = async () => {
-    setProfiles(await request(
-      listType === MenuItem.PROFILES_NETWORK.id ?
-        APIRoute.GET_PROFILES :
-        `${APIRoute.GET_PROFILES}/${userMail}`,
-    ));
-  };
-
-  useEffect(() => {
-    isActive && getProfiles();
-    isProfileDataChanged && setIsProfileDataChanged(false);
-  }, [isActive, isProfileDataChanged]);
-
+const ProfilesList = ({
+  profiles,
+  listType,
+  onAddProfileClick,
+  setIsProfileDataChanged,
+  isCardCreating,
+  setIsCardCreating,
+  activeCardForm,
+  setActiveCardForm,
+}) => {
   return (
     <div className="profiles-list">
       {
@@ -39,19 +24,22 @@ const ProfilesList = ({isActive, listType}) => {
           return (
             <ProfileCard
               key={`profile-card-${profile._id}`}
+              data-testid='profile-card'
               profile={profile}
               index={i}
               setIsProfileDataChanged={setIsProfileDataChanged}
               setIsCardCreating={setIsCardCreating}
               isCardCreating={isCardCreating}
               listType={listType}
+              activeCardForm={activeCardForm}
+              setActiveCardForm={setActiveCardForm}
             />
           );
         })
       }
       {
         listType === MenuItem.MY_PROFILES.id && (isCardCreating ? (
-          <ProfileCardForm
+          <ProfileCardEdit
             setIsProfileDataChanged={setIsProfileDataChanged}
             setIsCardCreating={setIsCardCreating}
             type={ProfileFormType.CREATE}
@@ -71,10 +59,23 @@ const ProfilesList = ({isActive, listType}) => {
 };
 
 ProfilesList.propTypes = {
-  isActive: PropTypes.bool.isRequired,
+  profiles: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    owner: PropTypes.string,
+    birthdate: PropTypes.string,
+    gender: PropTypes.string,
+    name: PropTypes.string,
+    city: PropTypes.string,
+  })),
   listType: PropTypes.oneOf(
       [MenuItem.MY_PROFILES.id, MenuItem.PROFILES_NETWORK.id],
   ).isRequired,
+  onAddProfileClick: PropTypes.func,
+  isCardCreating: PropTypes.bool,
+  setIsProfileDataChanged: PropTypes.func,
+  setIsCardCreating: PropTypes.func,
+  activeCardForm: PropTypes.string,
+  setActiveCardForm: PropTypes.func,
 };
 
 export default ProfilesList;

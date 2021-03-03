@@ -1,4 +1,4 @@
-.user-card-edit {
+.profile-card-edit {
   color: black;
   background-color: white;
   font-size: 1.1rem;
@@ -13,7 +13,7 @@
   align-items: flex-start;
 }
 
-.user-card-edit label {
+.profile-card-edit label {
   margin: 0 1rem;
 }
 
@@ -24,18 +24,18 @@
   justify-content: center;
 }
 
-.user-card-edit__close-container {
+.profile-card-edit__close-container {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.user-card-edit__close_btn {
+.profile-card-edit__close_btn {
   border: 0px;
   background-color: #fff;
 }
 
-.user-card-edit__close-img {
+.profile-card-edit__close-img {
   width: 2rem;
   margin: .5rem;
 }

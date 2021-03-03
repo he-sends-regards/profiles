@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Renders correctly with isActive prop 1`] = `null`;
-
-exports[`Renders correctly without isActive prop 1`] = `null`;

@@ -1,64 +1,35 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
+import moment from 'moment';
 import cancelSvg from './img/cancel.svg';
 import {useForm} from 'react-hook-form';
-import {APIRoute, HTTPStatus, ProfileFormType} from '../../../const';
-import {AuthContext} from '../../../context/AuthContext';
-import {useHttp} from '../../../hooks/http.hook';
+import {ProfileFormType} from '../../../const';
 import './profile-card-form.css';
 
 const ProfileCardForm = ({
-  setIsCardCreating,
-  setIsCardEditing,
-  setIsProfileDataChanged,
+  onSubmit,
+  onFormClose,
   type,
   profile,
 }) => {
-  const {userMail} = useContext(AuthContext);
-  const {request} = useHttp();
   const {register, handleSubmit, errors} = useForm();
 
-  const onSumbit = async (authData) => {
-    const data = type === ProfileFormType.CREATE ?
-      await request(
-          `${APIRoute.GET_PROFILES}/add`,
-          'POST',
-          Object.assign({}, authData, {owner: userMail}),
-      ) :
-      await request(
-          `${APIRoute.GET_PROFILES}/update/${profile._id}`,
-          'PUT',
-          Object.assign({}, authData, {owner: userMail}),
-      );
-
-    if (data.status === HTTPStatus.OK) {
-      setIsProfileDataChanged(true);
-      type === ProfileFormType.CREATE ?
-        setIsCardCreating(false) :
-        setIsCardEditing(false);
-    }
-  };
-
-  const onFormClose = () => {
-    if (type === ProfileFormType.CREATE) {
-      setIsCardCreating(false);
-    } else if (type === ProfileFormType.EDIT) {
-      setIsCardEditing(false);
-    } else {
-      console.error(`Unknown type in form: ${type}`);
-    }
-  };
-
   return (
-    <form className="user-card-edit" onSubmit={handleSubmit(onSumbit)}>
-      <div className="user-card-edit__close-container">
+    <form
+      className="profile-card-edit"
+      data-testid="profile-card-edit"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="profile-card-edit__close-container">
         <button
-          className="user-card-edit__close_btn"
-          onClick={onFormClose}>
+          className="profile-card-edit__close_btn"
+        >
           <img
             src={cancelSvg}
-            className="user-card-edit__close-img"
+            className="profile-card-edit__close-img"
+            onClick={onFormClose}
+            data-testid="profile-card-edit__close-img"
             alt="Close creation of the new profile"
           />
         </button>
@@ -68,6 +39,7 @@ const ProfileCardForm = ({
         <input
           type="name"
           name="name"
+          data-testid="name-field"
           defaultValue={profile ? profile.name : ''}
           id="name-field"
           ref={register({required: true, minLength: 2})}
@@ -105,15 +77,13 @@ const ProfileCardForm = ({
         <input
           type="date"
           name="birthdate"
-          ref={register({required: true})}
-          defaultValue={profile ? profile.birthdate : ''}
-        />
+          ref={register()}
+          defaultValue={
+            profile ?
+              profile.birthdate :
+              moment().format('YYYY-MM-DD')
+          }/>
         <br/>
-        {
-          errors.birthdate &&
-          errors.birthdate.type === 'required' &&
-            <span role="alert">This is required</span>
-        }
       </div>
       <br />
       <div>
@@ -148,13 +118,12 @@ const ProfileCardForm = ({
 };
 
 ProfileCardForm.propTypes = {
-  setIsCardCreating: PropTypes.func.isRequired,
-  setIsCardEditing: PropTypes.func,
-  setIsProfileDataChanged: PropTypes.func.isRequired,
   type: PropTypes.oneOf([
     ProfileFormType.CREATE, ProfileFormType.EDIT,
   ]).isRequired,
   profile: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onFormClose: PropTypes.func.isRequired,
 };
 
 export default ProfileCardForm;
