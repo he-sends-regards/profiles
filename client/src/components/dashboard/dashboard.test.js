@@ -1,24 +1,32 @@
 import React from 'react';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import Enzyme, {mount, shallow} from 'enzyme';
+import {screen, render} from '@testing-library/react';
+
 import Dashboard from './dashboard.jsx';
 
-Enzyme.configure({adapter: new Adapter()});
+const setUp = (props) => render(<Dashboard {...props} />);
 
-const setUp = (props) => shallow(<Dashboard {...props} />);
+const mockDashData = {
+  usersCount: 10,
+  profilesCount: 20,
+  profiles: [
+    {
+      birthdate: '2020-01-01',
+    },
+    {
+      birthdate: '2000-01-01',
+    },
+    {
+      birthdate: '2002-03-04',
+    },
+  ],
+};
 
-it('Renders correctly with default isActive prop', () => {
-  const setDash = jest.fn();
-  const handleClick = jest.spyOn(React, 'useState');
-  handleClick.mockImplementation((dash) => [dash, setDash]);
-
-  const DashboardComponent = setUp({
-    isActive: true,
+describe('Dashboard tests', () => {
+  it('Should render correctly', () => {
+    setUp({
+      isActive: true,
+      dashData: mockDashData,
+    });
+    expect(screen.getByTestId('dashboard')).toBeTruthy();
   });
-  const MenuFirstItem = MenuComponent.find('.nav-link').first();
-
-  MenuFirstItem.simulate('click');
-
-  expect(setActiveTab).toBeTruthy();
 });
-

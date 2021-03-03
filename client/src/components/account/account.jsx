@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Tab, Row, Col} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Dashboard from '../dashboard/dashboard';
-import ProfilesList from '../profiles-list/profiles-list';
-import UsersList from '../users-list/users-list';
+import Profiles from '../profiles/profiles';
+import Users from '../users/users';
 import {MenuItem} from '../../const';
 import './account.css';
 import Menu from '../menu/menu';
@@ -13,7 +13,7 @@ const Account = ({userData}) => {
   const [activeTab, setActiveTab] = useState('');
 
   return (
-    <div className="account">
+    <div className="account" data-testid="account">
       <Tab.Container id="left-tabs-example">
         <Row className="mx-0">
           <Col sm={2}>
@@ -26,8 +26,11 @@ const Account = ({userData}) => {
 
           <Col sm={10}>
             <Tab.Content>
-              <Tab.Pane eventKey={MenuItem.MY_PROFILES.id}>
-                <ProfilesList
+              <Tab.Pane
+                eventKey={MenuItem.MY_PROFILES.id}
+                data-testid="menu-content"
+              >
+                <Profiles
                   isActive={activeTab === MenuItem.MY_PROFILES.id}
                   listType={MenuItem.MY_PROFILES.id}
                 />
@@ -35,24 +38,33 @@ const Account = ({userData}) => {
               {
                 isUserAdmin &&
                   (
-                    <>
-                      <Tab.Pane eventKey={MenuItem.PROFILES_NETWORK.id}>
-                        <ProfilesList
+                    <div>
+                      <Tab.Pane
+                        data-testid="menu-content"
+                        eventKey={MenuItem.PROFILES_NETWORK.id}
+                      >
+                        <Profiles
                           isActive={activeTab === MenuItem.PROFILES_NETWORK.id}
                           listType={MenuItem.PROFILES_NETWORK.id}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey={MenuItem.USERS_NETWORK.id}>
-                        <UsersList
+                      <Tab.Pane
+                        data-testid="menu-content"
+                        eventKey={MenuItem.USERS_NETWORK.id}
+                      >
+                        <Users
                           isActive={activeTab === MenuItem.USERS_NETWORK.id}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey={MenuItem.DASHBOARD.id}>
+                      <Tab.Pane
+                        data-testid="menu-content"
+                        eventKey={MenuItem.DASHBOARD.id}
+                      >
                         <Dashboard
                           isActive={activeTab === MenuItem.DASHBOARD.id}
                         />
                       </Tab.Pane>
-                    </>
+                    </div>
                   )
               }
             </Tab.Content>

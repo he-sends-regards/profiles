@@ -5,20 +5,28 @@ import {APIRoute} from '../../const';
 import PropTypes from 'prop-types';
 import {getAge} from '../../utils';
 
-const Dashboard = ({isActive = false}) => {
+const Dashboard = ({isActive = false, dashData = []}) => {
   const {request} = useHttp();
-  const [dash, setDash] = useState([]);
+  const [dash, setDash] = useState(dashData);
 
   const getDash = async () => {
     setDash(await request(APIRoute.DASHBOARD));
   };
 
   useEffect(() => {
-    getDash();
+    if (isActive) {
+      getDash();
+    }
   }, [isActive]);
 
   return dash.length !== 0 && (
-    <Table striped bordered hover variant="dark">
+    <Table
+      striped
+      bordered
+      hover
+      variant="dark"
+      data-testid="dashboard"
+    >
       <thead>
         <tr>
           <th>Total amount of users</th>
@@ -44,6 +52,13 @@ const Dashboard = ({isActive = false}) => {
 
 Dashboard.propTypes = {
   isActive: PropTypes.bool,
+  dashData: PropTypes.shape({
+    usersCount: PropTypes.number,
+    profilesCount: PropTypes.number,
+    profiles: PropTypes.arrayOf(PropTypes.shape({
+      birthdate: PropTypes.string,
+    })),
+  }),
 };
 
 export default Dashboard;

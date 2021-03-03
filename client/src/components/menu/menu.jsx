@@ -12,7 +12,6 @@ const Menu = ({
   activeTab,
 }) => {
   const auth = useContext(AuthContext);
-
   const {userName, isUserAdmin} = userData;
   const onTabClick = (tabName) => setActiveTab(tabName);
   const onLogout = () => auth.logout();
