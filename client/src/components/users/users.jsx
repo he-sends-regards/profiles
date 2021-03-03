@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useHttp} from '../../hooks/http.hook';
-import UserCard from '../user-card/user-сard';
 import {APIRoute} from '../../const';
+import UsersList from './users-list';
 import './users-list.css';
 
-const UsersList = ({isActive}) => {
+const Users = ({isActive}) => {
   const [users, setUsers] = useState([]);
   const [isUserDataChanged, setIsUserDataChanged] = useState(false);
   const {request} = useHttp();
@@ -25,26 +25,13 @@ const UsersList = ({isActive}) => {
     }
   }, [isActive, isUserDataChanged]);
 
-  return (
-    <div className="users-list">
-      {
-        users.map((user, i) => {
-          i += 1;
-          return (
-            <UserCard
-              key={`user-card-${user._id}`}
-              user={user}
-              setIsUserDataChanged={setIsUserDataChanged}
-            />
-          );
-        })
-      }
-    </div>
+  return isActive && (
+    <UsersList users={users} setIsUserDataChanged={setIsUserDataChanged} />
   );
 };
 
-UsersList.propTypes = {
+Users.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-export default UsersList;
+export default Users;
