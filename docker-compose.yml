@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     image: profiles-server
     container_name: profiles-node-server
-    command: /usr/src/app/node_modules/.bin/nodemon server.js
+    command: /usr/src/app/node_modules/.bin/nodemon app.js
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
