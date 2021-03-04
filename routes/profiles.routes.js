@@ -1,10 +1,12 @@
 const Router = require('express');
 const Profile = require('../models/Profile.js');
+const authCheck = require('../middlewares/auth.middleware.js');
 
 const router = new Router();
 
 router.get(
     '/',
+    authCheck,
     async (req, res) => {
       try {
         const profiles = await Profile.find();
@@ -19,6 +21,7 @@ router.get(
 
 router.get(
     '/:userEmail',
+    authCheck,
     async (req, res) => {
       try {
         const userProfiles = await Profile.find({owner: req.params.userEmail});
@@ -34,6 +37,7 @@ router.get(
 
 router.put(
     '/update/:id',
+    authCheck,
     async (req, res) => {
       try {
         console.log(req.body);
@@ -56,6 +60,7 @@ router.put(
 
 router.delete(
     '/delete/:id',
+    authCheck,
     async (req, res) => {
       try {
         const {isUserAdmin} = req.body;
@@ -82,6 +87,7 @@ router.delete(
 
 router.post(
     '/add',
+    authCheck,
     async (req, res) => {
       try {
         const newProfile = new Profile(req.body);
