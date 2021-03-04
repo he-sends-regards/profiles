@@ -23,6 +23,7 @@ const ProfileCardForm = ({
     >
       <div className="profile-card-edit__close-container">
         <button
+          type="button"
           className="profile-card-edit__close_btn"
         >
           <img
