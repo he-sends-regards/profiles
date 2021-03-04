@@ -17,7 +17,7 @@ const ProfileCard = ({
   isCardCreating,
 }) => {
   const {request} = useHttp();
-  const {isUserAdmin} = useContext(AuthContext);
+  const {isUserAdmin, token} = useContext(AuthContext);
   const [isCardEditing, setIsCardEditing] = useState(false);
 
   const onEditClick = () => {
@@ -31,6 +31,7 @@ const ProfileCard = ({
         `/api/profiles/delete/${profile._id}`,
         'DELETE',
         {isUserAdmin},
+        {userToken: token},
     );
     if (data.status === HTTPStatus.OK) {
       setIsProfileDataChanged(true);

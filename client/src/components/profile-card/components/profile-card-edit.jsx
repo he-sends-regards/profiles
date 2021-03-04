@@ -13,7 +13,7 @@ const ProfileCardEdit = ({
   type,
   profile,
 }) => {
-  const {userMail} = useContext(AuthContext);
+  const {userMail, token} = useContext(AuthContext);
   const {request} = useHttp();
 
   const onSubmit = async (authData) => {
@@ -22,11 +22,13 @@ const ProfileCardEdit = ({
           `${APIRoute.GET_PROFILES}/add`,
           'POST',
           Object.assign({}, authData, {owner: userMail}),
+          {userToken: token},
       ) :
       await request(
           `${APIRoute.GET_PROFILES}/update/${profile._id}`,
           'PUT',
           Object.assign({}, authData, {owner: userMail}),
+          {userToken: token},
       );
 
     if (data.status === HTTPStatus.OK) {

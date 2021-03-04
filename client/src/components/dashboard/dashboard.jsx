@@ -1,16 +1,28 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Table} from 'react-bootstrap';
+import {AuthContext} from '../../context/AuthContext';
 import {useHttp} from '../../hooks/http.hook';
 import {APIRoute} from '../../const';
 import PropTypes from 'prop-types';
 import {getAge} from '../../utils';
 
 const Dashboard = ({isActive = false, dashData = []}) => {
+  const {token} = useContext(AuthContext);
   const {request} = useHttp();
   const [dash, setDash] = useState(dashData);
 
   const getDash = async () => {
-    setDash(await request(APIRoute.DASHBOARD));
+    const dashboardData = await request(
+        APIRoute.DASHBOARD,
+        'GET',
+        null,
+        {userToken: token},
+    );
+    if (dashboardData.usersCount &&
+      dashboardData.profilesCount &&
+      dashboardData.profiles) {
+      setDash(dashboardData);
+    }
   };
 
   useEffect(() => {

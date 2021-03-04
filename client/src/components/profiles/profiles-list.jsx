@@ -19,7 +19,7 @@ const ProfilesList = ({
   return (
     <div className="profiles-list">
       {
-        profiles.map((profile, i) => {
+        !profiles.message && profiles.map((profile, i) => {
           i += 1;
           return (
             <ProfileCard

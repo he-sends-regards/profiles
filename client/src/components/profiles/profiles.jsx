@@ -12,7 +12,7 @@ const Profiles = ({isActive, listType}) => {
   const [isCardCreating, setIsCardCreating] = useState(false);
   const [activeCardForm, setActiveCardForm] = useState(null);
 
-  const {userMail} = useContext(AuthContext);
+  const {userMail, token} = useContext(AuthContext);
   const {request} = useHttp();
 
   const onAddProfileClick = () => {
@@ -21,11 +21,17 @@ const Profiles = ({isActive, listType}) => {
   };
 
   const getProfiles = async () => {
-    setProfiles(await request(
+    const profilesData = await request(
       listType === MenuItem.PROFILES_NETWORK.id ?
         APIRoute.GET_PROFILES :
         `${APIRoute.GET_PROFILES}/${userMail}`,
-    ));
+      'GET',
+      null,
+      {userToken: token},
+    );
+    if (profilesData instanceof Array && profilesData.length !== 0) {
+      setProfiles(profilesData);
+    }
   };
 
   useEffect(() => {

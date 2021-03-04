@@ -8,12 +8,14 @@ import './user-сard.css';
 
 const UserCard = ({user, setIsUserDataChanged}) => {
   const {request} = useHttp();
-  const {userMail, logout, isUserAdmin} = useContext(AuthContext);
+  const {userMail, logout, isUserAdmin, token} = useContext(AuthContext);
 
   const onUpgradeToAdminClick = async () => {
     const data = await request(
         `api/users/updateToAdmin/${user.email}`,
         'PUT',
+        null,
+        {userToken: token},
     );
     console.log(data);
     if (data.status === HTTPStatus.OK) {
@@ -26,6 +28,7 @@ const UserCard = ({user, setIsUserDataChanged}) => {
         `${APIRoute.DELETE_USER}/${user.email}`,
         'DELETE',
         {isUserAdmin},
+        {userToken: token},
     );
     if (data.status === HTTPStatus.OK) {
       if (user.email === userMail) {
