@@ -9,7 +9,7 @@ export const APIRoute = {
   GET_USERS: '/api/users',
   DASHBOARD: '/api/users/dashboard',
   DELETE_USER: '/api/users/delete',
-  GET_PROFILES: '/api/profiles/',
+  GET_PROFILES: '/api/profiles',
 };
 
 export const AuthorizationStatus = {

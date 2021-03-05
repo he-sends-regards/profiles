@@ -8,10 +8,39 @@ import './user-сard.css';
 
 const UserCard = ({user, setIsUserDataChanged}) => {
   const {request} = useHttp();
-  const {userMail, logout, isUserAdmin} = useContext(AuthContext);
+  const {userMail, logout, isUserAdmin, token} = useContext(AuthContext);
+
+  const onUpgradeToAdminClick = async () => {
+    const data = await request(
+        `api/users/updateToAdmin/${user.email}`,
+        'PUT',
+        null,
+        {userToken: token},
+    );
+    console.log(data);
+    if (data.status === HTTPStatus.OK) {
+      setIsUserDataChanged(true);
+    }
+  };
+
+  const onDeleteUserClick = async () => {
+    const data = await request(
+        `${APIRoute.DELETE_USER}/${user.email}`,
+        'DELETE',
+        {isUserAdmin},
+        {userToken: token},
+    );
+    if (data.status === HTTPStatus.OK) {
+      if (user.email === userMail) {
+        logout();
+      } else {
+        setIsUserDataChanged(true);
+      }
+    };
+  };
 
   return (
-    <Card className="user-card">
+    <Card className="user-card" data-testid="user-card">
       <Card.Body className="user-card_body">
         <Card.Title>{user.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
@@ -23,6 +52,7 @@ const UserCard = ({user, setIsUserDataChanged}) => {
           </span>
           {
             !user.isAdmin && (
+<<<<<<< HEAD
               <Card.Link style={{
                 cursor: 'pointer',
                 color: 'green',
@@ -37,6 +67,10 @@ const UserCard = ({user, setIsUserDataChanged}) => {
                   setIsUserDataChanged(true);
                 }
               }}
+=======
+              <Card.Link className="user-card__link_upgrade"
+                onClick={onUpgradeToAdminClick}
+>>>>>>> master
               >
                 Upgrade to admin &uarr;
               </Card.Link>
@@ -44,25 +78,8 @@ const UserCard = ({user, setIsUserDataChanged}) => {
           }
         </Card.Text>
         <div>
-          <Card.Link
-            style={{
-              cursor: 'pointer',
-              color: 'red',
-            }}
-            onClick={async () => {
-              const data = await request(
-                  `${APIRoute.DELETE_USER}/${user.email}`,
-                  'DELETE',
-                  {isUserAdmin},
-              );
-              if (data.status === HTTPStatus.OK) {
-                if (user.email === userMail) {
-                  logout();
-                } else {
-                  setIsUserDataChanged(true);
-                }
-              };
-            }}
+          <Card.Link className="user-card__link_delete"
+            onClick={onDeleteUserClick}
           >Delete</Card.Link>
         </div>
       </Card.Body>

@@ -1,0 +1,21 @@
+.profiles-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.profiles-list__card {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profiles-card__btn {
+  width: 30%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

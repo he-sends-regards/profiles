@@ -1,81 +1,36 @@
-import React, {useContext, createRef} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
+import moment from 'moment';
 import cancelSvg from './img/cancel.svg';
-import {APIRoute, HTTPStatus, MenuItem, ProfileFormType} from '../../../const';
-import {AuthContext} from '../../../context/AuthContext';
-import {useHttp} from '../../../hooks/http.hook';
+import {useForm} from 'react-hook-form';
+import {ProfileFormType} from '../../../const';
 import './profile-card-form.css';
 
 const ProfileCardForm = ({
-  setIsCardCreating,
-  setIsCardEditing,
-  setIsProfileDataChanged,
+  onSubmit,
+  onFormClose,
   type,
   profile,
-  listType,
 }) => {
-  const {userMail} = useContext(AuthContext);
-  const {request} = useHttp();
-
-  const nameRef = createRef();
-  const calendarRef = createRef();
-  const genderRef = createRef();
-  const cityRef = createRef();
-
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-
-    const newProfileData = listType === MenuItem.PROFILES_NETWORK.id ? {
-      birthdate: calendarRef.current.value,
-      gender: genderRef.current.value,
-      name: nameRef.current.value,
-      city: cityRef.current.value,
-    } : {
-      owner: userMail,
-      birthdate: calendarRef.current.value,
-      gender: genderRef.current.value,
-      name: nameRef.current.value,
-      city: cityRef.current.value,
-    };
-
-    const data = type === ProfileFormType.CREATE ?
-      await request(
-          `${APIRoute.GET_PROFILES}/add`,
-          'POST',
-          newProfileData,
-      ) :
-      await request(
-          `${APIRoute.GET_PROFILES}/update/${profile._id}`,
-          'PUT',
-          newProfileData,
-      );
-
-    if (data.status === HTTPStatus.OK) {
-      setIsProfileDataChanged(true);
-      type === ProfileFormType.CREATE ?
-        setIsCardCreating(false) :
-        setIsCardEditing(false);
-    }
-  };
+  const {register, handleSubmit, errors} = useForm();
 
   return (
-    <form className="user-card-edit" onSubmit={handleSubmit}>
-      <div className="user-card-edit__close-container">
+    <form
+      className="profile-card-edit"
+      data-testid="profile-card-edit"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="profile-card-edit__close-container">
         <button
-          className="user-card-edit__close_btn"
-          onClick={() => {
-            if (type === ProfileFormType.CREATE) {
-              setIsCardCreating(false);
-            } else if (type === ProfileFormType.EDIT) {
-              setIsCardEditing(false);
-            } else {
-              console.error(`Unknown type in form: ${type}`);
-            }
-          }}>
+          type="button"
+          className="profile-card-edit__close_btn"
+        >
           <img
             src={cancelSvg}
-            className="user-card-edit__close-img"
+            className="profile-card-edit__close-img"
+            onClick={onFormClose}
+            data-testid="profile-card-edit__close-img"
             alt="Close creation of the new profile"
           />
         </button>
@@ -83,13 +38,24 @@ const ProfileCardForm = ({
       <div>
         <label htmlFor="name-field">Name:</label>
         <input
-          minLength="2"
           type="name"
+          name="name"
+          data-testid="name-field"
           defaultValue={profile ? profile.name : ''}
           id="name-field"
-          ref={nameRef}
-          required
+          ref={register({required: true, minLength: 2})}
         />
+        <br/>
+        {
+          errors.name &&
+          errors.name.type === 'required' &&
+            <span role="alert">This is required</span>
+        }
+        {
+          errors.name &&
+          errors.name.type === 'minLength' &&
+            <span role="alert">Min length exceeded</span>
+        }
       </div>
       <br />
       <div>
@@ -98,8 +64,7 @@ const ProfileCardForm = ({
           defaultValue={profile ? profile.gender : ''}
           name="gender"
           id="gender"
-          required
-          ref={genderRef}
+          ref={register({required: true})}
         >
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -112,22 +77,31 @@ const ProfileCardForm = ({
         <label htmlFor="email-field">Birthdate: </label>
         <input
           type="date"
-          name="calendar"
-          ref={calendarRef}
-          required
-          defaultValue={profile ? profile.birthdate : ''}
-        />
+          name="birthdate"
+          ref={register()}
+          defaultValue={
+            profile ?
+              profile.birthdate :
+              moment().format('YYYY-MM-DD')
+          }/>
+        <br/>
       </div>
       <br />
       <div>
         <label htmlFor="city-field">City: </label>
         <input
           type="text"
+          name="city"
           id="city-field"
-          required
-          ref={cityRef}
+          ref={register({required: true})}
           defaultValue={profile ? profile.city : ''}
         />
+        <br/>
+        {
+          errors.city &&
+          errors.city.type === 'required' &&
+            <span role="alert">This is required</span>
+        }
         <br />
       </div>
 
@@ -145,16 +119,12 @@ const ProfileCardForm = ({
 };
 
 ProfileCardForm.propTypes = {
-  setIsCardCreating: PropTypes.func.isRequired,
-  setIsCardEditing: PropTypes.func,
-  setIsProfileDataChanged: PropTypes.func.isRequired,
   type: PropTypes.oneOf([
     ProfileFormType.CREATE, ProfileFormType.EDIT,
   ]).isRequired,
   profile: PropTypes.object,
-  listType: PropTypes.oneOf(
-      [MenuItem.MY_PROFILES.id, MenuItem.PROFILES_NETWORK.id],
-  ),
+  onSubmit: PropTypes.func.isRequired,
+  onFormClose: PropTypes.func.isRequired,
 };
 
 export default ProfileCardForm;

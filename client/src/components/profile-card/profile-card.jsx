@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Card} from 'react-bootstrap';
-import ProfileCardForm from './components/profile-card-form';
+import ProfileCardEdit from './components/profile-card-edit';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
-import {HTTPStatus, MenuItem, ProfileFormType} from '../../const';
+import {HTTPStatus, ProfileFormType} from '../../const';
 import './profile-card.css';
 
 const ProfileCard = ({
@@ -12,23 +12,43 @@ const ProfileCard = ({
   index,
   setIsProfileDataChanged,
   setIsCardCreating,
-  listType,
+  activeCardForm,
+  setActiveCardForm,
+  isCardCreating,
 }) => {
   const {request} = useHttp();
-  const {isUserAdmin} = useContext(AuthContext);
+  const {isUserAdmin, token} = useContext(AuthContext);
   const [isCardEditing, setIsCardEditing] = useState(false);
 
-  return isCardEditing ? (
-    <ProfileCardForm
+  const onEditClick = () => {
+    setIsCardCreating(false);
+    setIsCardEditing(true);
+    setActiveCardForm(profile._id);
+  };
+
+  const onDeleteClick = async () => {
+    const data = await request(
+        `/api/profiles/delete/${profile._id}`,
+        'DELETE',
+        {isUserAdmin},
+        {userToken: token},
+    );
+    if (data.status === HTTPStatus.OK) {
+      setIsProfileDataChanged(true);
+    }
+  };
+
+  return (isCardEditing && !isCardCreating) &&
+    activeCardForm === profile._id ? (
+    <ProfileCardEdit
       profile={profile}
       type={ProfileFormType.EDIT}
       setIsProfileDataChanged={setIsProfileDataChanged}
       setIsCardCreating={setIsCardCreating}
       setIsCardEditing={setIsCardEditing}
-      listType={listType}
     />
   ) : (
-    <Card className="profile-card">
+    <Card className="profile-card" data-testid="profile-card">
       <Card.Body>
         <Card.Title>Profile #{index}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
@@ -43,29 +63,16 @@ const ProfileCard = ({
         </Card.Text>
 
         <Card.Link
-          style={{cursor: 'pointer'}}
-          onClick={() => {
-            setIsCardCreating(false);
-            setIsCardEditing(true);
-          }}
+          className="profile-card__link"
+          onClick={onEditClick}
+          data-testid="profile-card__edit-btn"
         >
           Edit
         </Card.Link>
 
         <Card.Link
-          style={{
-            cursor: 'pointer',
-          }}
-          onClick={async () => {
-            const data = await request(
-                `/api/profiles/delete/${profile._id}`,
-                'DELETE',
-                {isUserAdmin},
-            );
-            if (data.status === HTTPStatus.OK) {
-              setIsProfileDataChanged(true);
-            }
-          }}
+          className="profile-card__link"
+          onClick={onDeleteClick}
         >Delete</Card.Link>
       </Card.Body>
     </Card>
@@ -84,10 +91,13 @@ ProfileCard.propTypes = {
   setIsProfileDataChanged: PropTypes.func.isRequired,
   setIsCardEditing: PropTypes.func,
   setIsCardCreating: PropTypes.func.isRequired,
+  isCardCreating: PropTypes.bool.isRequired,
   isCardEditing: PropTypes.bool,
-  listType: PropTypes.oneOf(
-      [MenuItem.MY_PROFILES.id, MenuItem.PROFILES_NETWORK.id],
-  ).isRequired,
+  activeCardForm: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.oneOf([null]).isRequired,
+  ]),
+  setActiveCardForm: PropTypes.func.isRequired,
 };
 
 export default ProfileCard;

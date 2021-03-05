@@ -1,23 +1,23 @@
-import React, {useContext, useState} from 'react';
-import {Nav, Tab, Row, Col, Button} from 'react-bootstrap';
-import {AuthContext} from '../../context/AuthContext';
+import React, {useState} from 'react';
+import {Tab, Row, Col} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import Dashboard from '../dashboard/dashboard';
-import ProfilesList from '../profiles-list/profiles-list';
-import UsersList from '../users-list/users-list';
+import Profiles from '../profiles/profiles';
+import Users from '../users/users';
 import {MenuItem} from '../../const';
 import './account.css';
-import accSvg from './img/account-logo.svg';
-import kingSvg from './img/king-logo.svg';
+import Menu from '../menu/menu';
 
-const Account = () => {
-  const auth = useContext(AuthContext);
+const Account = ({userData}) => {
+  const {isUserAdmin} = userData;
   const [activeTab, setActiveTab] = useState('');
 
   return (
-    <div className="account">
+    <div className="account" data-testid="account">
       <Tab.Container id="left-tabs-example">
         <Row className="mx-0">
           <Col sm={2}>
+<<<<<<< HEAD
             <Nav variant="pills" className="flex-column text-center">
               <h3>
                 <img
@@ -64,37 +64,56 @@ const Account = () => {
                 Logout
               </Button>
             </Nav>
+=======
+            <Menu
+              setActiveTab={setActiveTab}
+              userData={userData}
+              activeTab={activeTab}
+            />
+>>>>>>> master
           </Col>
 
           <Col sm={10}>
             <Tab.Content>
-              <Tab.Pane eventKey={MenuItem.MY_PROFILES.id}>
-                <ProfilesList
+              <Tab.Pane
+                eventKey={MenuItem.MY_PROFILES.id}
+                data-testid="menu-content"
+              >
+                <Profiles
                   isActive={activeTab === MenuItem.MY_PROFILES.id}
                   listType={MenuItem.MY_PROFILES.id}
                 />
               </Tab.Pane>
               {
-                auth.isUserAdmin &&
+                isUserAdmin &&
                   (
-                    <>
-                      <Tab.Pane eventKey={MenuItem.PROFILES_NETWORK.id}>
-                        <ProfilesList
+                    <div>
+                      <Tab.Pane
+                        data-testid="menu-content"
+                        eventKey={MenuItem.PROFILES_NETWORK.id}
+                      >
+                        <Profiles
                           isActive={activeTab === MenuItem.PROFILES_NETWORK.id}
                           listType={MenuItem.PROFILES_NETWORK.id}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey={MenuItem.USERS_NETWORK.id}>
-                        <UsersList
+                      <Tab.Pane
+                        data-testid="menu-content"
+                        eventKey={MenuItem.USERS_NETWORK.id}
+                      >
+                        <Users
                           isActive={activeTab === MenuItem.USERS_NETWORK.id}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey={MenuItem.DASHBOARD.id}>
+                      <Tab.Pane
+                        data-testid="menu-content"
+                        eventKey={MenuItem.DASHBOARD.id}
+                      >
                         <Dashboard
                           isActive={activeTab === MenuItem.DASHBOARD.id}
                         />
                       </Tab.Pane>
-                    </>
+                    </div>
                   )
               }
             </Tab.Content>
@@ -103,6 +122,13 @@ const Account = () => {
       </Tab.Container>
     </div>
   );
+};
+
+Account.propTypes = {
+  userData: PropTypes.shape({
+    isUserAdmin: PropTypes.bool.isRequired,
+    userName: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Account;
