@@ -1,13 +1,6 @@
 import React from 'react';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import {screen, render, fireEvent} from '@testing-library/react';
-import Enzyme, {mount} from 'enzyme';
-import {jest} from '@jest/globals';
 import Menu from './menu.jsx';
-
-Enzyme.configure({adapter: new Adapter()});
-
-const setUp = (props) => mount(<Menu {...props} />);
 
 const mockName = 'John';
 const defaultName = 'Unknown';
@@ -47,22 +40,5 @@ describe('Menu renders correctly with props', () => {
 
     expect(logoutBtnComponent.disabled).toBe(false);
     expect(fireEvent.click(screen.getByText('Logout'))).toBe(true);
-  });
-
-  it('State should change if menu tab is clicked', () => {
-    const setActiveTab = jest.fn();
-    const handleClick = jest.spyOn(React, 'useState');
-    handleClick.mockImplementation((activeTab) => [activeTab, setActiveTab]);
-
-    const MenuComponent = setUp({
-      activeTab: '',
-      userData: {isUserAdmin: true},
-      setActiveTab,
-    });
-    const MenuFirstItem = MenuComponent.find('.nav-link').first();
-
-    MenuFirstItem.simulate('click');
-
-    expect(setActiveTab).toBeTruthy();
   });
 });
