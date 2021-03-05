@@ -1,24 +1,35 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const {PORT, mongoUri} = require('./const.js');
-const path = require('path');
 
 const app = express();
 
 app.use(express.json({
   extended: true,
 }));
-
 app.use('/api/auth', require('./routes/auth.routes.js'));
 app.use('/api/profiles', require('./routes/profiles.routes.js'));
 app.use('/api/users', require('./routes/users.routes.js'));
-app.use(express.static('client/build'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use(function(req, res) {
-  res.sendFile(path.join(__dirname, './client/build/index.html'));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname = '/client/build/index.html'));
+  });
+} else if (process.env.NODE_ENV === 'development') {
+  app.use(express.static(path.join(__dirname, 'client/public')));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname = '/client/public/index.html'));
+  });
+}
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
-
-app.use(express.static('client/build'));
 
 const start = async () => {
   try {
