@@ -52,25 +52,8 @@ const UserCard = ({user, setIsUserDataChanged}) => {
           </span>
           {
             !user.isAdmin && (
-<<<<<<< HEAD
-              <Card.Link style={{
-                cursor: 'pointer',
-                color: 'green',
-              }}
-              onClick={async () => {
-                const data = await request(
-                    `api/users/updateToAdmin/${user.email}`,
-                    'PUT',
-                );
-
-                if (data.status === HTTPStatus.OK) {
-                  setIsUserDataChanged(true);
-                }
-              }}
-=======
               <Card.Link className="user-card__link_upgrade"
                 onClick={onUpgradeToAdminClick}
->>>>>>> master
               >
                 Upgrade to admin &uarr;
               </Card.Link>

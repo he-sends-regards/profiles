@@ -17,4 +17,7 @@ public/bundle.js.map
 
 # npm
 package-lock.json
+
 coverage
+
+build

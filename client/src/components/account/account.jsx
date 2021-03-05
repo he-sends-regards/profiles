@@ -17,60 +17,11 @@ const Account = ({userData}) => {
       <Tab.Container id="left-tabs-example">
         <Row className="mx-0">
           <Col sm={2}>
-<<<<<<< HEAD
-            <Nav variant="pills" className="flex-column text-center">
-              <h3>
-                <img
-                  src={
-                    auth.isUserAdmin ?
-                      kingSvg :
-                      accSvg
-                  }
-                  alt="Account logo"
-                  width="40px"
-                  style={{filter: !auth.isUserAdmin && 'invert()'}}
-                />
-                <br/>
-                {auth.userName}
-              </h3>
-
-              <br/>
-              {
-                Object.values(MenuItem).map((menuItem) => {
-                  if (!auth.isUserAdmin &&
-                     menuItem.id !== MenuItem.MY_PROFILES) {
-                    return;
-                  }
-                  return (
-                    <Nav.Item key={`${menuItem.id}-menu-item`}>
-                      <Nav.Link
-                        eventKey={menuItem.id}
-                        onClick={() => {
-                          setActiveTab(menuItem.id);
-                        }}
-                        disabled={activeTab === menuItem.id}
-                      >
-                        {menuItem.name}
-                      </Nav.Link>
-                    </Nav.Item>
-                  );
-                })
-              }
-              <br/>
-
-              <Button variant="outline-danger"
-                className="account__logout-btn"
-                onClick={() => auth.logout()}>
-                Logout
-              </Button>
-            </Nav>
-=======
             <Menu
               setActiveTab={setActiveTab}
               userData={userData}
               activeTab={activeTab}
             />
->>>>>>> master
           </Col>
 
           <Col sm={10}>
