@@ -13,11 +13,7 @@ app.use('/api/users', require('./routes/users.routes.js'));
 
 const start = async () => {
   try {
-<<<<<<< HEAD
-    await mongoose.connect(process.env.MONGODB_URI || mongoUri, {
-=======
-    await mongoose.connect('mongodb://localhost:27017/', {
->>>>>>> master
+    await mongoose.connect(mongoUri, {
       dbName: 'profiles_testtask',
       useNewUrlParser: true,
       useUnifiedTopology: true,
